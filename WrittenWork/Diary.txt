@@ -1,0 +1,12 @@
+28/09/23
+- Since the start of term I have briefly looked around the topic generally. This involved briefly looking at some research papers.
+01/10/23
+- In the past few days I have delved further into some specific papers. I will most likely use these to help construct my abstract.
+04/10/23
+- I have now started work on my plan for the final year project. I have almost completed my abstract, but it just needs some further refinements.
+08/10/23
+- Since the 4th I have completed the project plan and handed it in on time. 
+11/10/23
+- Research into in-depth game logic of chess conducted. Preperation of development environment.
+15/10/23
+- Programming of the game side of chess started. Basic game logic created but no visuals.
