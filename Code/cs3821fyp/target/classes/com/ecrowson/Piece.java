@@ -8,10 +8,10 @@ public class Piece {
     int xp;
     int yp;
     boolean isWhite;
-    String type;
+    char type;
     LinkedList<Piece> ps;
     GridPane board;
-    public Piece(GridPane board, int xp, int yp, boolean isWhite, String type, LinkedList<Piece> ps){
+    public Piece(GridPane board, int xp, int yp, boolean isWhite, char type, LinkedList<Piece> ps){
         this.xp = xp;
         this.yp = yp;
         this.isWhite = isWhite;
