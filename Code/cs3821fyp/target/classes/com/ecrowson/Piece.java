@@ -2,9 +2,10 @@ package com.ecrowson;
 
 import java.util.LinkedList;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
-public class Piece {
+public class Piece extends ImageView {
     int xp;
     int yp;
     boolean isWhite;
@@ -29,16 +30,15 @@ public class Piece {
         Image i = new Image("Pieces/"+colour+""+this.type+".png");
         ImageView p = new ImageView(i);
         board.add(p,xp,yp);
+        p.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            System.out.println(colour+""+this.type);
+            Main.pieceClicked(this);
+            event.consume();
+        });
     }
-
+    
     public void move(int xp, int yp){
-        for(Piece p: ps){
-            if(p.xp==xp&&p.yp==yp){
-                p.kill();
-            }
-        }
-        this.xp = xp;
-        this.yp = yp;
+        
     }
 
     public void kill(){ ps.remove(this); }

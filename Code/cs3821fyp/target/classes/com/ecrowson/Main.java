@@ -2,8 +2,6 @@ package com.ecrowson;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.paint.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -11,9 +9,12 @@ import javafx.scene.shape.*;
 import java.io.IOException;
 import java.util.LinkedList;
 
-
 public class Main extends Application {
     GridPane board = new GridPane();
+    LinkedList<Piece> ps = new LinkedList<>();
+    public static Piece targetPiece;
+    public static Piece currentPiece;
+    public static boolean selected = false;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -32,8 +33,7 @@ public class Main extends Application {
         Scene scene = new Scene(board, 480, 480);
         stage.setScene(scene);
         stage.setTitle("Chess");
-        
-        LinkedList<Piece> ps = new LinkedList<>();
+    
         Piece BR=new Piece(board,0, 0, false, 'R', ps);
         Piece BN=new Piece(board,1, 0, false, 'N', ps);
         Piece BB=new Piece(board,2, 0, false, 'B', ps);
@@ -74,5 +74,15 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch();
     }
+
+    public static void pieceClicked(Piece newPiece){
+        if (!selected){
+            currentPiece = newPiece; 
+        }
+        else{
+            targetPiece = newPiece;
+        }
+    }
+    
 }
 
