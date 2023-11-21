@@ -9,4 +9,4 @@
 11/10/23
 - Research into in-depth game logic of chess conducted. Preperation of development environment.
 15/10/23
-- Programming of the game side of chess started. Basic game logic created but no visuals.
+- Programming of the .game side of chess started. Basic game logic created but no visuals
