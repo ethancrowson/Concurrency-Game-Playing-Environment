@@ -30,6 +30,10 @@ public class Space extends StackPane{
         return xturn;
     }
 
+    public String getValue(){
+        return text.getText();
+    } 
+
     private Boolean isOccupied(){
         if (text.getText().isEmpty()){
             return false;
