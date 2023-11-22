@@ -7,12 +7,16 @@ import javafx.scene.layout.Pane;
 
 public class TicTacToeApp extends Application {
     Pane board = new Pane();
+    Boolean isXTurn = true;
 
     @Override
     public void start(Stage Stage) throws Exception{
         for (int col=0;col<3;col++){
             for (int row=0;row<3;row++){
                 Space space = new Space();
+                space.setOnMouseClicked( e -> {
+                    space.setValue(isXTurn);
+                });
                 space.setTranslateX(row*160);
                 space.setTranslateY(col*160);
                 board.getChildren().add(space);
