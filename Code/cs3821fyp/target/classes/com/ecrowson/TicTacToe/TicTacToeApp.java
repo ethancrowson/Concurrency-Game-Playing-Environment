@@ -16,6 +16,7 @@ public class TicTacToeApp extends Application {
                 Space space = new Space();
                 space.setOnMouseClicked( e -> {
                     space.setValue(isXTurn);
+                    isXTurn = !isXTurn;
                 });
                 space.setTranslateX(row*160);
                 space.setTranslateY(col*160);

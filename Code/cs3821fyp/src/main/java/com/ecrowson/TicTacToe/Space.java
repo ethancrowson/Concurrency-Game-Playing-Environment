@@ -18,7 +18,7 @@ public class Space extends StackPane{
         getChildren().addAll(square, text);
     }
     
-    public void setValue(Boolean xturn){
+    public Boolean setValue(Boolean xturn){
         if (!isOccupied()){
             if (xturn){
                 text.setText("X");
@@ -27,6 +27,7 @@ public class Space extends StackPane{
                 text.setText("O");
             }
         }
+        return xturn;
     }
 
     private Boolean isOccupied(){
