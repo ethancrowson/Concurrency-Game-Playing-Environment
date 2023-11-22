@@ -3,6 +3,7 @@ package com.ecrowson.TicTacToe;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class Space extends StackPane{
@@ -12,6 +13,8 @@ public class Space extends StackPane{
         Rectangle square = new Rectangle(160,160);
         square.setFill(null);
         square.setStroke(Color.BLACK);
+        text.setFont(Font.font(80));
+
         getChildren().addAll(square, text);
     }
     
