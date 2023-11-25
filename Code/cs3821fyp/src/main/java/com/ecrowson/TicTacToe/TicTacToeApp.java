@@ -7,7 +7,6 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
 
 public class TicTacToeApp extends Application {
     private Pane board = new Pane();
@@ -36,7 +35,7 @@ public class TicTacToeApp extends Application {
         }
         addLines();
         
-        Stage.setScene(new Scene(board,480,480));
+        Stage.setScene(new Scene(board,480,580));
         Stage.setTitle("TicTacToe");
         Stage.show();
     }
@@ -50,6 +49,7 @@ public class TicTacToeApp extends Application {
             if (line.isComplete()){
                 inPlay = false;
                 winScreen(line);
+                break;
             }
         }
         return false;
@@ -70,7 +70,7 @@ public class TicTacToeApp extends Application {
     private void winScreen(WinLine line){
         Space lineStart = line.getSpace(0);
         Space lineEnd = line.getSpace(2);
-        Line winningLine = new Line(lineStart.getCenterX(),lineStart.getCenterY(),lineEnd.getCenterX(),lineEnd.getCenterY());
+        Line winningLine = new Line(lineStart.getCenterX(),lineStart.getCenterY(),lineEnd.getCenterX()+160,lineEnd.getCenterY()+160);
         
         board.getChildren().add(winningLine);
     }
