@@ -33,6 +33,14 @@ public class Space extends StackPane{
     public String getValue(){
         return text.getText();
     } 
+    
+    public double getCenterX(){
+        return getTranslateX();
+    }
+
+    public double getCenterY(){
+        return getTranslateY();
+    }
 
     private Boolean isOccupied(){
         if (text.getText().isEmpty()){

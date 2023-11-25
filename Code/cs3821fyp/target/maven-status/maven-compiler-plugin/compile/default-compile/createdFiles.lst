@@ -1,4 +1,5 @@
 com\ecrowson\TicTacToe\Space.class
+com\ecrowson\TicTacToe\WinLine.class
 com\ecrowson\TicTacToe\TicTacToeApp.class
 com\ecrowson\Chess\Piece.class
 com\ecrowson\Chess\Main.class
