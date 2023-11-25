@@ -2,9 +2,15 @@ package com.ecrowson.TicTacToe;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 
@@ -14,6 +20,7 @@ public class TicTacToeApp extends Application {
     private Space[][] spaces = new Space[3][3]; 
     private Boolean inPlay = true;
     private List<WinLine> lines = new ArrayList<>();
+    private Label whosTurn = new Label("X's Turn to play!");
     @Override
     public void start(Stage Stage) throws Exception{
         for (int col=0;col<3;col++){
@@ -24,6 +31,12 @@ public class TicTacToeApp extends Application {
                         space.setValue(isXTurn);
                         checkWin();
                         isXTurn = !isXTurn;
+                        if (isXTurn){
+                            whosTurn.setText("X's Turn to play!");
+                        }
+                        else{
+                            whosTurn.setText("O's Turn to play!");
+                        }
                     }
                 });
                 space.setTranslateX(row*160);
@@ -34,7 +47,7 @@ public class TicTacToeApp extends Application {
             }
         }
         addLines();
-        
+        board.getChildren().add(whosTurn);
         Stage.setScene(new Scene(board,480,580));
         Stage.setTitle("TicTacToe");
         Stage.show();
@@ -70,8 +83,28 @@ public class TicTacToeApp extends Application {
     private void winScreen(WinLine line){
         Space lineStart = line.getSpace(0);
         Space lineEnd = line.getSpace(2);
-        Line winningLine = new Line(lineStart.getCenterX(),lineStart.getCenterY(),lineEnd.getCenterX()+160,lineEnd.getCenterY()+160);
-        
+        Line winningLine = new Line(lineStart.getCenterX(),lineStart.getCenterY(),lineStart.getCenterX(),lineStart.getCenterY());
         board.getChildren().add(winningLine);
+        Timeline timeline = new Timeline();
+        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(2),
+            new KeyValue(winningLine.endXProperty(), lineEnd.getCenterX()+160), 
+            new KeyValue(winningLine.endYProperty(), lineEnd.getCenterX()+160)));
+        timeline.play();
+
+        timeline.setOnFinished(e -> {
+            board.getChildren().remove(winningLine);
+            resetBoard();
+        });
+    }
+
+    private void resetBoard(){
+        inPlay = true;
+        isXTurn = true;
+        whosTurn.setText("X's Turn to play!");
+        for (int i=0;i<3;i++){
+            for (int j=0;j<3;j++){
+                spaces[j][i].resetValue();
+            }
+        }
     }
 }

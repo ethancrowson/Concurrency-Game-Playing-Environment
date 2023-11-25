@@ -30,6 +30,10 @@ public class Space extends StackPane{
         return xturn;
     }
 
+    public void resetValue(){
+        text.setText("");
+    }
+
     public String getValue(){
         return text.getText();
     } 
