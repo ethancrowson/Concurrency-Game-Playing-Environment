@@ -159,16 +159,19 @@ public class TicTacToeApp extends Application {
     }
 
     private Boolean isDraw(){
-        for (Space[] spaceRow : spaces){
-            for (Space space : spaceRow){
-                if (!space.isOccupied()){
-                    return false;
+        if (inPlay){
+            for (Space[] spaceRow : spaces){
+                for (Space space : spaceRow){
+                    if (!space.isOccupied()){
+                        return false;
+                    }
                 }
             }
+            inPlay = false;
+            drawScreen();
+            return true;
         }
-        inPlay = false;
-        drawScreen();
-        return true;
+        return false;
     }
 
     private void resetBoard(){
