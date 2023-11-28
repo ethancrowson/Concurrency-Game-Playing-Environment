@@ -51,16 +51,18 @@ public class TicTacToeApp extends Application {
             for (int row=0;row<3;row++){
                 Space space = new Space();
                 space.setOnMouseClicked( e -> {
-                    if (inPlay){
-                        space.setValue(isXTurn);
-                        checkWin();
-                        isDraw();
-                        isXTurn = !isXTurn;
-                        if (isXTurn){
-                            whosTurn.setText("To Play\nX");
-                        }
-                        else{
-                            whosTurn.setText("To Play\nO");
+                    if (!space.isOccupied()){
+                        if (inPlay){
+                            space.setValue(isXTurn);
+                            checkWin();
+                            isDraw();
+                            isXTurn = !isXTurn;
+                            if (isXTurn){
+                                whosTurn.setText("To Play\nX");
+                            }
+                            else{
+                                whosTurn.setText("To Play\nO");
+                            }
                         }
                     }
                 });
