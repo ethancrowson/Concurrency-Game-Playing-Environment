@@ -51,20 +51,7 @@ public class TicTacToeApp extends Application {
             for (int row=0;row<3;row++){
                 Space space = new Space();
                 space.setOnMouseClicked( e -> {
-                    if (!space.isOccupied()){
-                        if (inPlay){
-                            space.setValue(isXTurn);
-                            checkWin();
-                            isDraw();
-                            isXTurn = !isXTurn;
-                            if (isXTurn){
-                                whosTurn.setText("To Play\nX");
-                            }
-                            else{
-                                whosTurn.setText("To Play\nO");
-                            }
-                        }
-                    }
+                    gameManager(space);
                 });
                 space.setTranslateX(row*160);
                 space.setTranslateY(col*160);
@@ -98,6 +85,26 @@ public class TicTacToeApp extends Application {
         }
         return false;
     }
+    private void gameManager(Space space){
+        if (!space.isOccupied()){
+            if (inPlay){
+                space.setValue(isXTurn);
+                    if (checkWin()){
+                        return;
+                    }
+                    isDraw();
+                    isXTurn = !isXTurn;
+                    if (isXTurn){
+                        whosTurn.setText("To Play\nX");
+                    }
+                    else{
+                        System.out.println("a");
+                        whosTurn.setText("To Play\nO");
+                    }
+             }
+        }
+    }
+
     private void addLines(){
         //horizontals
         for (int y=0; y<3; y++){
@@ -116,18 +123,18 @@ public class TicTacToeApp extends Application {
         double lineStartY = line.getSpace(0).getCenterY();
         double lineEndX = line.getSpace(2).getCenterX();
         double lineEndY = line.getSpace(2).getCenterY();
-
+    
         if (line.getSpace(0).getValue().equals("X")){
             numWinsX ++;
-            whosTurn.setText("Result\nX Wins!");
+            whosTurn.setText("Result\nX Wins");
+            System.out.println(whosTurn.getText());
             xCount.setText("X\n"+numWinsX);
         }
         else{
             numWinsO ++;
-            whosTurn.setText("Result\nO Wins!");
+            whosTurn.setText("Result\nO Wins");
             oCount.setText("O\n"+numWinsO);
         }
-
 
         Line winningLine = new Line(lineStartX,lineStartY,lineStartX,lineStartY);
         board.getChildren().add(winningLine);
@@ -139,6 +146,7 @@ public class TicTacToeApp extends Application {
         timeline.play();
 
         timeline.setOnFinished(e -> {
+            System.out.println(whosTurn.getText());
             board.getChildren().remove(winningLine);
             resetBoard();
         });
@@ -147,7 +155,7 @@ public class TicTacToeApp extends Application {
     private void drawScreen(){
         numDraws ++;
         drawCount.setText("Draw\n"+numDraws);
-
+        whosTurn.setText("Result\nDraw");
         Timeline timeline = new Timeline();
         timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(2), 
             new KeyValue(whosTurn.textProperty(), "Result\nDraw")));
@@ -160,6 +168,7 @@ public class TicTacToeApp extends Application {
 
     private Boolean isDraw(){
         if (inPlay){
+            System.out.println("b");
             for (Space[] spaceRow : spaces){
                 for (Space space : spaceRow){
                     if (!space.isOccupied()){
