@@ -39,14 +39,14 @@ public class Space extends StackPane{
     } 
     
     public double getCenterX(){
-        return getTranslateX();
+        return getTranslateX()+80;
     }
 
     public double getCenterY(){
-        return getTranslateY();
+        return getTranslateY()+80;
     }
 
-    private Boolean isOccupied(){
+    public Boolean isOccupied(){
         if (text.getText().isEmpty()){
             return false;
         }

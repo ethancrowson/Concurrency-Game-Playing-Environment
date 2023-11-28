@@ -7,47 +7,36 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
+import javafx.scene.text.TextAlignment;
 
 public class TicTacToeApp extends Application {
     private Pane board = new Pane();
     private Boolean isXTurn = true;
     private Space[][] spaces = new Space[3][3]; 
     private Boolean inPlay = true;
+    private Boolean xStart = true;
     private List<WinLine> lines = new ArrayList<>();
-    private Label whosTurn = new Label("X's Turn to play!");
+    private Label whosTurn = new Label("To Play\nX");
+    private HBox bottom = new HBox();
+    private int numWinsX = 0;
+    private int numWinsO = 0;
+    private int numDraws = 0;
+    private Label xCount = new Label("X\n"+numWinsX);
+    private Label oCount = new Label("O\n"+numWinsO);
+    private Label drawCount = new Label("Draw\n"+numDraws);
+    
     @Override
     public void start(Stage Stage) throws Exception{
-        for (int col=0;col<3;col++){
-            for (int row=0;row<3;row++){
-                Space space = new Space();
-                space.setOnMouseClicked( e -> {
-                    if (inPlay){
-                        space.setValue(isXTurn);
-                        checkWin();
-                        isXTurn = !isXTurn;
-                        if (isXTurn){
-                            whosTurn.setText("X's Turn to play!");
-                        }
-                        else{
-                            whosTurn.setText("O's Turn to play!");
-                        }
-                    }
-                });
-                space.setTranslateX(row*160);
-                space.setTranslateY(col*160);
-                board.getChildren().add(space);
-
-                spaces[row][col] = space;
-            }
-        }
-        addLines();
-        board.getChildren().add(whosTurn);
+        createBoard();
         Stage.setScene(new Scene(board,480,580));
         Stage.setTitle("TicTacToe");
         Stage.show();
@@ -57,12 +46,52 @@ public class TicTacToeApp extends Application {
         launch();
     }
 
+    private void createBoard(){
+        for (int col=0;col<3;col++){
+            for (int row=0;row<3;row++){
+                Space space = new Space();
+                space.setOnMouseClicked( e -> {
+                    if (inPlay){
+                        space.setValue(isXTurn);
+                        checkWin();
+                        isDraw();
+                        isXTurn = !isXTurn;
+                        if (isXTurn){
+                            whosTurn.setText("To Play\nX");
+                        }
+                        else{
+                            whosTurn.setText("To Play\nO");
+                        }
+                    }
+                });
+                space.setTranslateX(row*160);
+                space.setTranslateY(col*160);
+                board.getChildren().add(space);
+
+                spaces[col][row] = space;
+            }
+        }
+        addLines();
+        board.getChildren().add(bottom);
+        bottom.getChildren().addAll(whosTurn, xCount, drawCount, oCount);
+        bottom.setStyle("-fx-font: 32 arial;");
+        bottom.setLayoutY(480);
+        bottom.setAlignment(Pos.BOTTOM_CENTER);
+        bottom.setSpacing(30);
+        HBox.setMargin(whosTurn, new Insets(10,100,0,15));
+        whosTurn.setTextAlignment(TextAlignment.CENTER);
+        xCount.setTextAlignment(TextAlignment.CENTER);
+        drawCount.setTextAlignment(TextAlignment.CENTER);
+        oCount.setTextAlignment(TextAlignment.CENTER);
+
+        
+    }
     public Boolean checkWin(){
         for (WinLine line : lines){
             if (line.isComplete()){
                 inPlay = false;
                 winScreen(line);
-                break;
+                return true;
             }
         }
         return false;
@@ -81,14 +110,30 @@ public class TicTacToeApp extends Application {
         lines.add(new WinLine(spaces[2][0], spaces[1][1], spaces[0][2]));
     }
     private void winScreen(WinLine line){
-        Space lineStart = line.getSpace(0);
-        Space lineEnd = line.getSpace(2);
-        Line winningLine = new Line(lineStart.getCenterX(),lineStart.getCenterY(),lineStart.getCenterX(),lineStart.getCenterY());
+        double lineStartX = line.getSpace(0).getCenterX();
+        double lineStartY = line.getSpace(0).getCenterY();
+        double lineEndX = line.getSpace(2).getCenterX();
+        double lineEndY = line.getSpace(2).getCenterY();
+
+        if (line.getSpace(0).getValue().equals("X")){
+            numWinsX ++;
+            whosTurn.setText("Result\nX Wins!");
+            xCount.setText("X\n"+numWinsX);
+        }
+        else{
+            numWinsO ++;
+            whosTurn.setText("Result\nO Wins!");
+            oCount.setText("O\n"+numWinsO);
+        }
+
+
+        Line winningLine = new Line(lineStartX,lineStartY,lineStartX,lineStartY);
         board.getChildren().add(winningLine);
+        
         Timeline timeline = new Timeline();
         timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(2),
-            new KeyValue(winningLine.endXProperty(), lineEnd.getCenterX()+160), 
-            new KeyValue(winningLine.endYProperty(), lineEnd.getCenterX()+160)));
+            new KeyValue(winningLine.endXProperty(), lineEndX), 
+            new KeyValue(winningLine.endYProperty(), lineEndY)));
         timeline.play();
 
         timeline.setOnFinished(e -> {
@@ -97,10 +142,44 @@ public class TicTacToeApp extends Application {
         });
     }
 
+    private void drawScreen(){
+        numDraws ++;
+        drawCount.setText("Draw\n"+numDraws);
+
+        Timeline timeline = new Timeline();
+        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(2), 
+            new KeyValue(whosTurn.textProperty(), "Result\nDraw")));
+        timeline.play();
+
+        timeline.setOnFinished(e -> {
+            resetBoard();
+        });
+    }
+
+    private Boolean isDraw(){
+        for (Space[] spaceRow : spaces){
+            for (Space space : spaceRow){
+                if (!space.isOccupied()){
+                    return false;
+                }
+            }
+        }
+        inPlay = false;
+        drawScreen();
+        return true;
+    }
+
     private void resetBoard(){
         inPlay = true;
-        isXTurn = true;
-        whosTurn.setText("X's Turn to play!");
+        xStart = !xStart;
+        if (xStart){
+            whosTurn.setText("To Play\nX");
+            isXTurn = true;
+        }
+        else{
+            whosTurn.setText("To Play\nO");
+            isXTurn = false;
+        }
         for (int i=0;i<3;i++){
             for (int j=0;j<3;j++){
                 spaces[j][i].resetValue();
