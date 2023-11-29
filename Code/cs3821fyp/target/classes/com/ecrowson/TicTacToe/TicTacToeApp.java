@@ -19,17 +19,18 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.TextAlignment;
 
 public class TicTacToeApp extends Application {
+    //The TicTacToe application and the game handling.
     private Pane board = new Pane();
-    private Boolean isXTurn = true;
-    private Space[][] spaces = new Space[3][3]; 
-    private Boolean inPlay = true;
-    private Boolean xStart = true;
-    private List<WinLine> lines = new ArrayList<>();
+    private Boolean isXTurn = true; //Tracks whose turn it is in the game.
+    private Space[][] spaces = new Space[3][3]; //Array of Spaces (the TicTacToe board).
+    private Boolean inPlay = true; //Toggles depending on if the game is in a playable state or not.
+    private Boolean xStart = true; //Keeps track of who started the last game (this swaps after each game to ensure fair play).
+    private List<WinLine> lines = new ArrayList<>(); //Array which will fill up with all possible winning lines.
     private Label whosTurn = new Label("To Play\nX");
     private HBox bottom = new HBox();
-    private int numWinsX = 0;
-    private int numWinsO = 0;
-    private int numDraws = 0;
+    private int numWinsX = 0; //Keeps track of # of times X has won.
+    private int numWinsO = 0; //Keeps track of # of times O has won.
+    private int numDraws = 0; //Keeps track of # of times there has been a tie.
     private Label xCount = new Label("X\n"+numWinsX);
     private Label oCount = new Label("O\n"+numWinsO);
     private Label drawCount = new Label("Draw\n"+numDraws);
@@ -42,15 +43,16 @@ public class TicTacToeApp extends Application {
         Stage.show();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
         launch();
     }
 
     private void createBoard(){
+        //Initial setup of game board. Filling out the game board with spaces (3x3).
         for (int col=0;col<3;col++){
             for (int row=0;row<3;row++){
                 Space space = new Space();
-                space.setOnMouseClicked( e -> {
+                space.setOnMouseClicked( e -> { //Handles when each tile of the board is clicked on.
                     gameManager(space);
                 });
                 space.setTranslateX(row*160);
@@ -61,6 +63,8 @@ public class TicTacToeApp extends Application {
             }
         }
         addLines();
+
+        //Formatting the layout of the game board.
         board.getChildren().add(bottom);
         bottom.getChildren().addAll(whosTurn, xCount, drawCount, oCount);
         bottom.setStyle("-fx-font: 32 arial;");
@@ -76,6 +80,7 @@ public class TicTacToeApp extends Application {
         
     }
     public Boolean checkWin(){
+        //Checking if there is a winning line formed on the board. If so displays Win Screen.
         for (WinLine line : lines){
             if (line.isComplete()){
                 inPlay = false;
@@ -86,6 +91,7 @@ public class TicTacToeApp extends Application {
         return false;
     }
     private void gameManager(Space space){
+        //Manages the game playing of TicTacToe. Turn to turn basis.
         if (!space.isOccupied()){
             if (inPlay){
                 space.setValue(isXTurn);
@@ -98,7 +104,6 @@ public class TicTacToeApp extends Application {
                         whosTurn.setText("To Play\nX");
                     }
                     else{
-                        System.out.println("a");
                         whosTurn.setText("To Play\nO");
                     }
              }
@@ -106,6 +111,7 @@ public class TicTacToeApp extends Application {
     }
 
     private void addLines(){
+        //Adds all possible winning line combinations to the lines array
         //horizontals
         for (int y=0; y<3; y++){
             lines.add(new WinLine(spaces[0][y], spaces[1][y], spaces[2][y]));
@@ -119,6 +125,7 @@ public class TicTacToeApp extends Application {
         lines.add(new WinLine(spaces[2][0], spaces[1][1], spaces[0][2]));
     }
     private void winScreen(WinLine line){
+        //Handles the screen that is displayed when a player wins a game.
         double lineStartX = line.getSpace(0).getCenterX();
         double lineStartY = line.getSpace(0).getCenterY();
         double lineEndX = line.getSpace(2).getCenterX();
@@ -127,7 +134,6 @@ public class TicTacToeApp extends Application {
         if (line.getSpace(0).getValue().equals("X")){
             numWinsX ++;
             whosTurn.setText("Result\nX Wins");
-            System.out.println(whosTurn.getText());
             xCount.setText("X\n"+numWinsX);
         }
         else{
@@ -138,7 +144,7 @@ public class TicTacToeApp extends Application {
 
         Line winningLine = new Line(lineStartX,lineStartY,lineStartX,lineStartY);
         board.getChildren().add(winningLine);
-        
+        //Timeline animates the winning line being draw on screen.
         Timeline timeline = new Timeline();
         timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(2),
             new KeyValue(winningLine.endXProperty(), lineEndX), 
@@ -153,12 +159,13 @@ public class TicTacToeApp extends Application {
     }
 
     private void drawScreen(){
+        //Handles the screen that is displayed when a game is tied.
         numDraws ++;
         drawCount.setText("Draw\n"+numDraws);
         whosTurn.setText("Result\nDraw");
+        
         Timeline timeline = new Timeline();
-        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(2), 
-            new KeyValue(whosTurn.textProperty(), "Result\nDraw")));
+        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(2),new KeyValue(whosTurn.textProperty(),"Result\nDraw")));
         timeline.play();
 
         timeline.setOnFinished(e -> {
@@ -167,8 +174,8 @@ public class TicTacToeApp extends Application {
     }
 
     private Boolean isDraw(){
+        //Checks if there is a draw/stalemate. loops over every space and if all are occupied but no win then returns true and displays draw screen.
         if (inPlay){
-            System.out.println("b");
             for (Space[] spaceRow : spaces){
                 for (Space space : spaceRow){
                     if (!space.isOccupied()){
@@ -184,6 +191,7 @@ public class TicTacToeApp extends Application {
     }
 
     private void resetBoard(){
+        //Resets all the values of the board without needing them to be initiated again. Swaps whose turn it is to start. 
         inPlay = true;
         xStart = !xStart;
         if (xStart){

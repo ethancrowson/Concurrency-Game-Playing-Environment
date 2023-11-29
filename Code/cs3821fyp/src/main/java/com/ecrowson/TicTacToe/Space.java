@@ -7,6 +7,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class Space extends StackPane{
+    //The actual tiles of the game board.
     private Text text = new Text();
     
     public Space() {
@@ -18,8 +19,9 @@ public class Space extends StackPane{
         getChildren().addAll(square, text);
     }
     
-    public Boolean setValue(Boolean xturn){
-        if (!isOccupied()){
+    public void setValue(Boolean xturn){
+        //Sets the text of the space to either X or O depending on whose turn it is.
+        if (!isOccupied()){ //Calls is occupied so it cannot be overwritten.
             if (xturn){
                 text.setText("X");
             }
@@ -27,26 +29,30 @@ public class Space extends StackPane{
                 text.setText("O");
             }
         }
-        return xturn;
     }
 
     public void resetValue(){
+        //Resets the text value of the space to blank.
         text.setText("");
     }
 
     public String getValue(){
+        //Returns the text value of the space.
         return text.getText();
     } 
     
     public double getCenterX(){
+        //Returns the X co-ord of the center of the space.
         return getTranslateX()+80;
     }
 
     public double getCenterY(){
+        //Returns the Y co-ord center of the space.
         return getTranslateY()+80;
     }
 
     public Boolean isOccupied(){
+        //Returns if the space already has been assigned a value or not.
         if (text.getText().isEmpty()){
             return false;
         }
