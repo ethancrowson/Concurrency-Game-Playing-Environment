@@ -79,18 +79,6 @@ public class Game {
         oCount.setTextAlignment(TextAlignment.CENTER);
     }
 
-    public synchronized Boolean checkWin(){
-        //Checking if there is a winning line formed on the board. If so displays Win Screen.
-        for (WinLine line : lines){
-            if (line.isComplete()){
-                inPlay = false;
-                winScreen(line);
-                return true;
-            }
-        }
-        return false;
-    }
-
     private void gameManager(Space space) throws InterruptedException{
         //Manages the game playing of TicTacToe. Turn to turn basis.
         if (!space.isOccupied()){
@@ -195,23 +183,6 @@ public class Game {
         timeline.setOnFinished(e -> {
             resetBoard();
         });
-    }
-
-    private Boolean isDraw(){
-        //Checks if there is a draw/stalemate. loops over every space and if all are occupied but no win then returns true and displays draw screen.
-        if (inPlay){
-            for (Space[] spaceRow : spaces){
-                for (Space space : spaceRow){
-                    if (!space.isOccupied()){
-                        return false;
-                    }
-                }
-            }
-            inPlay = false;
-            drawScreen();
-            return true;
-        }
-        return false;
     }
 
     private void resetBoard(){
