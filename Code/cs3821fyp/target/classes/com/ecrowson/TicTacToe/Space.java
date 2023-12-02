@@ -52,7 +52,7 @@ public class Space extends StackPane{
     }
 
     public Boolean isOccupied(){
-        //Returns if the space already has been assigned a value or not.
+        //Returns if the space already has been assigned a value or
         if (text.getText().isEmpty()){
             return false;
         }

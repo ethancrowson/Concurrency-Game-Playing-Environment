@@ -19,4 +19,8 @@ public class WinLine {
         //In a given line it returns the space at the queried place.
         return spaces[i];
     }
+
+    public String toString(){
+        return "["+spaces[0].getValue()+"],["+spaces[1].getValue()+"],["+spaces[2].getValue()+"]";
+    }
 }
