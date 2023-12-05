@@ -106,6 +106,7 @@ public class Game {
         if (!space.isOccupied()) {
             if (inPlay) {
                 space.setValue(isXTurn);
+                // Task to handle checking of game status in background.
                 Task<WinLine> task = new Task<WinLine>() {
 
                     @Override
@@ -117,9 +118,9 @@ public class Game {
 
                     @Override
                     public void handle(WorkerStateEvent event) {
-                        statusLine = task.getValue();
-                        if (statusLine != null) {
-                            if (statusLine.isComplete()) {
+                        statusLine = task.getValue(); 
+                        if (statusLine != null) { // If there is a win/tie.
+                            if (statusLine.isComplete()) { //If there is a win.
                                 inPlay = false;
                                 winScreen(statusLine);
                                 return;
@@ -128,7 +129,7 @@ public class Game {
                             drawScreen();
                             return;
                         }
-                        isXTurn = !isXTurn;
+                        isXTurn = !isXTurn; // Change whose turn to play.
                         if (isXTurn) {
                             whosTurn.setText("To Play\nX");
                         } else {
@@ -137,8 +138,7 @@ public class Game {
                     }
 
                 });
-                Thread th = new Thread(task);
-                th.setDaemon(true);
+                Thread th = new Thread(task); // Thread to run the task in the background
                 th.start();
             }
         }
@@ -218,7 +218,7 @@ public class Game {
      */
     private void resetBoard() {
         inPlay = true;
-        xStart = !xStart;
+        xStart = !xStart; // Swaps who marks the board first. Ensures fair play.
         if (xStart) {
             whosTurn.setText("To Play\nX");
             isXTurn = true;
