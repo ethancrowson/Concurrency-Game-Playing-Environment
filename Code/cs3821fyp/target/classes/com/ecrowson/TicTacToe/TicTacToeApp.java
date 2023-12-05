@@ -4,15 +4,19 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-
+/**
+ * The application that runs the multiple instances of tic-tac-toe.
+ * 
+ * @author Ethan Crowson
+ */
 public class TicTacToeApp extends Application {
 
     /**
      * Starts the Application. Initializes a GameStatus object,2 Game objects and their respective
      * Stages to display them.
      * 
-     * @param Stage
-     * @throws Exception
+     * @param Stage The primary stage created with the application.
+     * @throws Exception Thrown when a thread is interrupted.
      */
     @Override
     public void start(Stage Stage) throws Exception {
@@ -33,7 +37,7 @@ public class TicTacToeApp extends Application {
         stage.show();
 
     }
-
+    /** Launches the application */
     public static void main(String[] args) {
         launch();
     }

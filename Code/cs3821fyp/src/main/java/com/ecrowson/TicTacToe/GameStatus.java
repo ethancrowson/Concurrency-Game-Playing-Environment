@@ -2,7 +2,11 @@ package com.ecrowson.TicTacToe;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Checks if a given game has been won / tied.
+ * 
+ * @author Ethan Crowson
+ */
 public class GameStatus {
 
     private List<WinLine> lines = new ArrayList<>();
@@ -24,7 +28,6 @@ public class GameStatus {
         if (result == null) {
             return isDraw();
         }
-        System.out.println(result.toString());
         return result;
     }
 

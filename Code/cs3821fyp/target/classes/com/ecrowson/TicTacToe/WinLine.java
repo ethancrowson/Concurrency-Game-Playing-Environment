@@ -1,9 +1,17 @@
 package com.ecrowson.TicTacToe;
-
+/**
+ * A line of spaces on the game board.
+ * 
+ * @author Ethan Crowson
+ */
 public class WinLine {
-    // Lines for winning a game of TicTacToe.
     private Space[] spaces; // An array of spaces. A row/column/diagonal of spaces.
 
+    /**
+     * Constructs a new WinLine instance.
+     * 
+     * @param spaces The spaces that combine to make a line.
+     */
     public WinLine(Space... spaces) {
         this.spaces = spaces;
     }

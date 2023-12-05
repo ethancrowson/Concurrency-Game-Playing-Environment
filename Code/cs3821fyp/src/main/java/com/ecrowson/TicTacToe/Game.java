@@ -16,7 +16,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
-
+/**
+ * The instance of the tic-tac-toe game. Handles the game playing.
+ * 
+ * @author Ethan Crowson
+ */
 public class Game {
     private Pane board = new Pane();
     private GameStatus gamestatus = new GameStatus();
@@ -37,7 +41,12 @@ public class Game {
     private Label xCount = new Label("X\n" + numWinsX);
     private Label oCount = new Label("O\n" + numWinsO);
     private Label drawCount = new Label("Draw\n" + numDraws);
-
+    /**
+     * Creates a new Game.
+     * 
+     * @param board The pane the game GUI will be created and played on.
+     * @param gamestatus The shared object between game instances that checks the status of a game.
+     */
     public Game(Pane board, GameStatus gamestatus) {
         this.gamestatus = gamestatus;
         this.board = board;
@@ -150,7 +159,11 @@ public class Game {
         lines.add(new WinLine(spaces[2][0], spaces[1][1], spaces[0][2]));
     }
 
-    /** Handles the screen that is displayed when a player wins a game. */
+    /**
+     * Handles the screen that is displayed when a player wins a game.
+     * 
+     * @param line The line that won the game.
+     */
     private void winScreen(WinLine line) {
         double lineStartX = line.getSpace(0).getCenterX();
         double lineStartY = line.getSpace(0).getCenterY();

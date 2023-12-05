@@ -1,0 +1,52 @@
+@options
+@packages
+-classpath
+'C:/Users/ethan/.m2/repository/org/openjfx/javafx-controls/17.0.2/javafx-controls-17.0.2.jar;C:/Users/ethan/.m2/repository/org/openjfx/javafx-controls/17.0.2/javafx-controls-17.0.2-win.jar;C:/Users/ethan/.m2/repository/org/openjfx/javafx-graphics/17.0.2/javafx-graphics-17.0.2.jar;C:/Users/ethan/.m2/repository/org/openjfx/javafx-graphics/17.0.2/javafx-graphics-17.0.2-win.jar;C:/Users/ethan/.m2/repository/org/openjfx/javafx-base/17.0.2/javafx-base-17.0.2.jar;C:/Users/ethan/.m2/repository/org/openjfx/javafx-base/17.0.2/javafx-base-17.0.2-win.jar'
+-encoding
+'UTF-8'
+-protected
+-source
+'17'
+-sourcepath
+'C:/Users/ethan/FinalYearProject/PROJECT/Code/cs3821fyp/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2023. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'C:/Users/ethan/FinalYearProject/PROJECT/Code/cs3821fyp/target/site/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'cs3821fyp 1.0-SNAPSHOT API'
+-use
+-version
+-windowtitle
+'cs3821fyp 1.0-SNAPSHOT API'
+com.ecrowson.Chess
+com.ecrowson.TicTacToe
+C:\Users\ethan\.m2\repository\org\openjfx\javafx-controls\17.0.2\javafx-controls-17.0.2.jar = 1698162836267
+C:\Users\ethan\.m2\repository\org\openjfx\javafx-controls\17.0.2\javafx-controls-17.0.2-win.jar = 1698162837371
+C:\Users\ethan\.m2\repository\org\openjfx\javafx-graphics\17.0.2\javafx-graphics-17.0.2.jar = 1698162836236
+C:\Users\ethan\.m2\repository\org\openjfx\javafx-graphics\17.0.2\javafx-graphics-17.0.2-win.jar = 1698162838862
+C:\Users\ethan\.m2\repository\org\openjfx\javafx-base\17.0.2\javafx-base-17.0.2.jar = 1698162836329
+C:\Users\ethan\.m2\repository\org\openjfx\javafx-base\17.0.2\javafx-base-17.0.2-win.jar = 1698162837501
+C:\Users\ethan\FinalYearProject\PROJECT\Code\cs3821fyp\src\main\java = 1698079421573
+C:\Users\ethan\FinalYearProject\PROJECT\Code\cs3821fyp\target\site\apidocs\allclasses-index.html = 1701818871295
+C:\Users\ethan\FinalYearProject\PROJECT\Code\cs3821fyp\target\site\apidocs\allpackages-index.html = 1701818871298
+C:\Users\ethan\FinalYearProject\PROJECT\Code\cs3821fyp\target\site\apidocs\element-list = 1701818871190
+C:\Users\ethan\FinalYearProject\PROJECT\Code\cs3821fyp\target\site\apidocs\help-doc.html = 1701818871324
+C:\Users\ethan\FinalYearProject\PROJECT\Code\cs3821fyp\target\site\apidocs\index-all.html = 1701818871317
+C:\Users\ethan\FinalYearProject\PROJECT\Code\cs3821fyp\target\site\apidocs\index.html = 1701818871279
+C:\Users\ethan\FinalYearProject\PROJECT\Code\cs3821fyp\target\site\apidocs\jquery-ui.overrides.css = 1701818871362
+C:\Users\ethan\FinalYearProject\PROJECT\Code\cs3821fyp\target\site\apidocs\member-search-index.js = 1701818871304
+C:\Users\ethan\FinalYearProject\PROJECT\Code\cs3821fyp\target\site\apidocs\module-search-index.js = 1701818871300
+C:\Users\ethan\FinalYearProject\PROJECT\Code\cs3821fyp\target\site\apidocs\overview-summary.html = 1701818871319
+C:\Users\ethan\FinalYearProject\PROJECT\Code\cs3821fyp\target\site\apidocs\overview-tree.html = 1701818871275
+C:\Users\ethan\FinalYearProject\PROJECT\Code\cs3821fyp\target\site\apidocs\package-search-index.js = 1701818871301
+C:\Users\ethan\FinalYearProject\PROJECT\Code\cs3821fyp\target\site\apidocs\script.js = 1701818871328
+C:\Users\ethan\FinalYearProject\PROJECT\Code\cs3821fyp\target\site\apidocs\search.js = 1701818871331
+C:\Users\ethan\FinalYearProject\PROJECT\Code\cs3821fyp\target\site\apidocs\stylesheet.css = 1701818871326
+C:\Users\ethan\FinalYearProject\PROJECT\Code\cs3821fyp\target\site\apidocs\tag-search-index.js = 1701818871305
+C:\Users\ethan\FinalYearProject\PROJECT\Code\cs3821fyp\target\site\apidocs\type-search-index.js = 1701818871302

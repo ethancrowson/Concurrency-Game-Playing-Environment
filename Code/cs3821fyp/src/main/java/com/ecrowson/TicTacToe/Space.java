@@ -5,11 +5,15 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-
+/**
+ * A space on the tic-tac-toe game board.
+ * 
+ * @author Ethan Crowson
+ */
 public class Space extends StackPane {
-    // The actual tiles of the game board.
     private Text text = new Text();
 
+    /** Constructs a new Space instance. */
     public Space() {
         Rectangle square = new Rectangle(160, 160);
         square.setFill(null);
@@ -35,13 +39,13 @@ public class Space extends StackPane {
         }
     }
 
+    /** Resets the value of the Space back to blank. */
     public void resetValue() {
-        // Resets the text value of the space to blank.
         text.setText("");
     }
 
+    /** Returns the text value of the space. */
     public String getValue() {
-        // Returns the text value of the space.
         return text.getText();
     }
 
