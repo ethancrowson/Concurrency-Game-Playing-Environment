@@ -2,6 +2,7 @@ package com.ecrowson.TicTacToe;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * Checks if a given game has been won / tied.
  * 

@@ -1,4 +1,5 @@
 package com.ecrowson.TicTacToe;
+
 /**
  * A line of spaces on the game board.
  * 

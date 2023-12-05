@@ -16,6 +16,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
+
 /**
  * The instance of the tic-tac-toe game. Handles the game playing.
  * 
@@ -41,6 +42,7 @@ public class Game {
     private Label xCount = new Label("X\n" + numWinsX);
     private Label oCount = new Label("O\n" + numWinsO);
     private Label drawCount = new Label("Draw\n" + numDraws);
+
     /**
      * Creates a new Game.
      * 
@@ -118,9 +120,9 @@ public class Game {
 
                     @Override
                     public void handle(WorkerStateEvent event) {
-                        statusLine = task.getValue(); 
+                        statusLine = task.getValue();
                         if (statusLine != null) { // If there is a win/tie.
-                            if (statusLine.isComplete()) { //If there is a win.
+                            if (statusLine.isComplete()) { // If there is a win.
                                 inPlay = false;
                                 winScreen(statusLine);
                                 return;
