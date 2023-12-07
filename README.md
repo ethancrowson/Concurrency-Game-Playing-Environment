@@ -3,6 +3,8 @@ TicTacToe and Chess application were developed independently and so currently do
 share a menu to choose between which to run. This means the main class run by 
 'mvn clean javafx:run' needs to be updated depending on which you want to run.
 
+Interim Video Link: https://www.youtube.com/watch?v=VhY4edE1UYU
+
 inital setup (using terminal):
 - cd into PROJECT\Code\cs3821fyp
 - install by typing 'mvn clean install'
