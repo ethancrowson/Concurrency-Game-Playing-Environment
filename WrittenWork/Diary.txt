@@ -1,12 +1,65 @@
 28/09/23
-- Since the start of term I have briefly looked around the topic generally. This involved briefly looking at some research papers.
+- Since the start of term I have briefly looked around the topic generally. This involved briefly 
+  looking at some research papers.
+
 01/10/23
-- In the past few days I have delved further into some specific papers. I will most likely use these to help construct my abstract.
+- In the past few days I have delved further into some specific papers. I will most likely use these
+  to help construct my abstract.
+
 04/10/23
-- I have now started work on my plan for the final year project. I have almost completed my abstract, but it just needs some further refinements.
+- I have now started work on my plan for the final year project. I have almost completed my abstract, 
+  but it just needs some further refinements.
+
 08/10/23
 - Since the 4th I have completed the project plan and handed it in on time. 
-11/10/23
-- Research into in-depth game logic of chess conducted. Preperation of development environment.
+
 15/10/23
-- Programming of the game side of chess started. Basic game logic created but no visuals.
+- Research conducted around basic chess logic and some simple algorithms.
+
+22/10/23
+- Some further research conducted but there is a lot to cover. Also delved into java concurrency.
+
+29/10/23
+- Creation of javafx for chess board. Pieces with pngs are added to the board and they can be clicked 
+  on.
+
+05/11/23
+- Realised that creating chess from scratch in javafx has a lot of complications such as handling 
+  mouse events. The creation of the game will take some time so is shelved until I have a further
+  understanding of javafx, java and concurrency.
+
+12/11/23
+- New idea of creating TicTacToe first and making that program concurrent. This will allow me to
+  get a better understanding of what is needed to complete chess. I aim to also implement This
+  into my final product as you can then can play multiple different games.
+
+19/11/23
+- Preperation made for making the TicTacToe game. This involved researching into better methods
+  available in javafx and research into the javafx.concurrent package.
+
+22/11/23
+- Functionality of TicTacToe is created. Very limited though as there is a board and you can set
+  spaces on the board to either x or o. There is a turn system and a class that handles the possible
+  ways you can win.
+
+26/11/23
+- Win system created for TicTacToe as well as animations to display this. 
+- A method was created so that multiple games could also be played sequentially on the same board. 
+  This is called after a game is finished.
+
+29/11/23
+- Lots of testing and bug fixes to account for them. 
+- Implementation of a score system and the visuals on the GUI to display them. 
+- Some comments were made on the code to properly explain some variables and methods. 
+- Trial and error for concurrency started.
+
+03/12/23
+- More trial and error (obscene amount) in order to get concurrency working for the game. Now there
+  are 2 instances of the game running at the same time. Also the game playing of the game is done on
+  background threads independant of the Application Thread. This makes the app run a lot smoother and 
+  the UI can actually be moved and work whilst other code is running. These 2 instances access this code 
+  in a concurrent way sharing a lock. 
+- Google checkstyles are also implemented with javadoc.
+- Presentation started and completed.
+
+

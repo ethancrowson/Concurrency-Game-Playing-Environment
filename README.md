@@ -1,5 +1,13 @@
 # Final Year Project
 
-This repository has been created to store your final year project.
+To run the Tic-tac-toe Application (The main application developed for interim).
+- First you must change into the PROJECT\Code\cs3821fyp directory.
+- You must then install the plugins using 'mvn clean install'.
+- The code is then run by typing 'mvn clean javafx:run' into the terminal.
 
-You may edit it as you like, but please do not remove the default topics or the project members list. These need to stay as currently defined in order for your supervisor to be able to find your project.
+To run the Chess Application (not too much development yet).
+mvn clean javafx:run will run the main class in the pom.xml
+- change the main class in pom to 'com.ecrowson.Chess.Main'.
+- Then you must change into the PROJECT\Code\cs3821fyp directory.
+- You must then install the plugins using 'mvn clean install'.
+- The code is then run by typing 'mvn clean javafx:run' into the terminal.
