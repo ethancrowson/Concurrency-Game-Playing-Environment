@@ -62,4 +62,40 @@
 - Google checkstyles are also implemented with javadoc.
 - Presentation started and completed.
 
+06/12/23
+- Presentation practice.
 
+10/12/23
+- Presentation performed and end of term.
+
+17/01/24
+- Start of term 2.
+
+
+21/01/24
+- Revisited goals and milestones for the project that i changed at the end of last term.
+- Looked back over the chess code and thought how i would proceed.
+
+24/01/24
+- Realised some fundamental errors in chess application compared to TicTacToe. Done some research into
+  ways to go about fixing this.
+
+28/01/24
+- Had meeting with advisor.
+- Discussed my approach to the project and my next steps.
+
+31/01/24
+- Conducted deeper research into specific elements nad javafx features that would benefit my chess 
+  application development. 
+
+04/02/24
+- Ill and unable to make any progress unfortunately.
+
+07/02/24
+- Still unwell and just looked at some of the knowledge around the topic of creating a chat application.
+
+11/02/24
+- developed understanding of chat applications and how they can be built in a java application.
+
+14/02/24
+- 
