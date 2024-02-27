@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.image.Image;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 
 public class Piece extends ImageView {
     int xp;
@@ -12,9 +12,9 @@ public class Piece extends ImageView {
     boolean isWhite;
     char type;
     LinkedList<Piece> ps;
-    GridPane board;
+    Pane board;
 
-    public Piece(GridPane board, int xp, int yp, boolean isWhite, char type, LinkedList<Piece> ps) {
+    public Piece(Pane board, int xp, int yp, boolean isWhite, char type, LinkedList<Piece> ps) {
         this.xp = xp;
         this.yp = yp;
         this.isWhite = isWhite;
@@ -25,7 +25,7 @@ public class Piece extends ImageView {
         setImage(board);
     }
 
-    public void setImage(GridPane board) {
+    public void setImage(Pane board) {
         char colour;
         if (this.isWhite) {
             colour = 'W';
@@ -34,7 +34,9 @@ public class Piece extends ImageView {
         }
         Image i = new Image("Pieces/" + colour + "" + this.type + ".png");
         ImageView p = new ImageView(i);
-        board.add(p, xp, yp);
+        p.setTranslateX(xp * 60);
+        p.setTranslateY(yp * 60);
+        board.getChildren().add(p);
         p.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             System.out.println(colour + "" + this.type);
             Main.pieceClicked(this);
