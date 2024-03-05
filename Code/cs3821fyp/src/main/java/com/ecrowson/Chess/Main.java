@@ -40,7 +40,7 @@ public class Main extends Application {
                 isLight = !isLight;
                 Tile tile = new Tile(isLight);
                 tile.setOnMouseClicked(e -> { // Handles when each tile of the board is clicked on.
-                
+                    
                 });
                 tile.setTranslateX(file * 60);
                 tile.setTranslateY(rank * 60);
