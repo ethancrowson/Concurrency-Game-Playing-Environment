@@ -98,4 +98,5 @@
 - developed understanding of chat applications and how they can be built in a java application.
 
 14/02/24
-- 
+- Restructuring of Chess application. Significant progress made. With a much more advanced understanding
+  than before from research, this has become a lot easier to make chess.
