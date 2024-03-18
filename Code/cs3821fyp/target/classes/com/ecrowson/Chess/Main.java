@@ -16,6 +16,7 @@ public class Main extends Application {
     private Tile[][] tiles = new Tile[8][8]; // Array of Spaces (the TicTacToe board).
     public boolean isLight = true;
     public boolean turnWhite = true;
+    private Tile selectedTile;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -41,13 +42,19 @@ public class Main extends Application {
                 isLight = !isLight;
                 Tile tile = new Tile(isLight);
                 tile.setOnMouseClicked(e -> { // Handles when each tile of the board is clicked on.
-                    if (!tile.isOccupied()){
+                    if (selectedTile != null){
+                        tile.setPiece(selectedTile.getPiece());
+                        selectedTile.removePiece();
+                        selectedTile = null;
+                    }
+                    else if (!tile.isOccupied()){
                     }
                     else if (turnWhite != tile.getPiece().isWhite){
                     }
                     else {
                         currentPiece = tile.getPiece();
                         System.out.println(currentPiece.colour + "" + currentPiece.type);
+                        selectedTile = tile;
                         tile.selected();
                     }
                 });

@@ -10,6 +10,7 @@ public class Tile extends StackPane{
     private Piece piece;
     private Rectangle square;
     private boolean isLight;
+    private ImageView p;
     /** Constructs a new Tile instance. */
     public Tile(Boolean isLight) {
         this.isLight = isLight;
@@ -31,13 +32,19 @@ public class Tile extends StackPane{
     public void setPiece(Piece piece){
         this.piece = piece;
         Image i = new Image("Pieces/" + piece.colour + "" + piece.type + ".png");
-        ImageView p = new ImageView(i);
+        p = new ImageView(i);
         this.getChildren().add(p);
         /*p.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             System.out.println(piece.colour + "" + piece.type);
             Main.pieceClicked(piece);
             event.consume();
         });*/
+    }
+    public void removePiece(){
+        if (piece != null){
+            piece = null;
+            this.getChildren().remove(p);
+        }
     }
     public void selected(){
         if (isLight){
