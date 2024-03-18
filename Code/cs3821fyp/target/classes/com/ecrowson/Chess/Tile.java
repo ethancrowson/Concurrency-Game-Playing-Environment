@@ -11,6 +11,7 @@ public class Tile extends StackPane{
     private Rectangle square;
     private boolean isLight;
     private ImageView p;
+    private ImageView hl;
     /** Constructs a new Tile instance. */
     public Tile(Boolean isLight) {
         this.isLight = isLight;
@@ -60,5 +61,15 @@ public class Tile extends StackPane{
             square.setFill(Color.rgb(118, 150, 86));
         }
     }
-    
+    public void setHighlight(String highlight){
+        Image i = new Image("Effects/highlight" + highlight + ".png");
+        hl = new ImageView(i);
+        this.getChildren().add(hl);
+    }
+    public void removeHighlight(){
+        if (hl != null){
+            this.getChildren().remove(hl);
+            hl = null;
+        }
+    }
 }

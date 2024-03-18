@@ -53,6 +53,7 @@ public class Main extends Application {
                         } 
                         else{
                             if (turnWhite != tile.getPiece().isWhite){
+                                tile.removePiece();
                                 tile.setPiece(selectedTile.getPiece());
                                 selectedTile.removePiece();
                                 selectedTile.deselect();
@@ -64,6 +65,7 @@ public class Main extends Application {
                                 selectedTile = null;
                             }
                         }
+                        clearPossibleMoves();
                     }
                     else if (!tile.isOccupied()){
                     }
@@ -74,6 +76,7 @@ public class Main extends Application {
                         System.out.println(currentPiece.colour + "" + currentPiece.type);
                         selectedTile = tile;
                         tile.selected();
+                        possibleMoves(selectedTile);
                     }
                 });
                 tile.setTranslateX(file * 60);
@@ -125,6 +128,28 @@ public class Main extends Application {
             targetPiece = newPiece;
         }
     }
+    public void possibleMoves(Tile sTile){
+        for (int file = 0; file < 8; file++){
+            for (int rank = 0; rank < 8; rank++){
+                Tile currTile = tiles[file][rank];
+                if (currTile.isOccupied()){
+                    if (currTile.getPiece().isWhite != turnWhite){
+                        currTile.setHighlight("Take");
+                    }
+                } else {
+                    currTile.setHighlight("Move");
+                }
 
+            }
+        }
+    }
+    public void clearPossibleMoves(){
+        for (int file = 0; file < 8; file++){
+            for (int rank = 0; rank < 8; rank++){
+                tiles[file][rank].removeHighlight();
+
+            }
+        }
+    }
 }
 
