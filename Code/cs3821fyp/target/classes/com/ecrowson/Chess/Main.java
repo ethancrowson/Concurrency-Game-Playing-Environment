@@ -51,6 +51,19 @@ public class Main extends Application {
                             selectedTile = null;
                             turnWhite = !turnWhite;
                         } 
+                        else{
+                            if (turnWhite != tile.getPiece().isWhite){
+                                tile.setPiece(selectedTile.getPiece());
+                                selectedTile.removePiece();
+                                selectedTile.deselect();
+                                selectedTile = null;
+                                turnWhite = !turnWhite;
+                            }
+                            else{
+                                selectedTile.deselect();
+                                selectedTile = null;
+                            }
+                        }
                     }
                     else if (!tile.isOccupied()){
                     }
