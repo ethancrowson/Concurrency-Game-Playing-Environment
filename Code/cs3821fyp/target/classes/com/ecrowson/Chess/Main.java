@@ -42,10 +42,15 @@ public class Main extends Application {
                 isLight = !isLight;
                 Tile tile = new Tile(isLight);
                 tile.setOnMouseClicked(e -> { // Handles when each tile of the board is clicked on.
-                    if (selectedTile != null){
-                        tile.setPiece(selectedTile.getPiece());
-                        selectedTile.removePiece();
-                        selectedTile = null;
+
+                    if (selectedTile != null){ //if a piece has been selected to move.
+                        if (!tile.isOccupied()){ //if the tile is free, move the piece.
+                            tile.setPiece(selectedTile.getPiece());
+                            selectedTile.removePiece();
+                            selectedTile.deselect();
+                            selectedTile = null;
+                            turnWhite = !turnWhite;
+                        } 
                     }
                     else if (!tile.isOccupied()){
                     }

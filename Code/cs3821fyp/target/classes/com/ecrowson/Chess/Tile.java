@@ -53,5 +53,12 @@ public class Tile extends StackPane{
             square.setFill(Color.rgb(185, 202, 67));
         }
     }
+    public void deselect(){
+        if (isLight){
+            square.setFill(Color.rgb(238, 238, 210));
+        } else {
+            square.setFill(Color.rgb(118, 150, 86));
+        }
+    }
     
 }
