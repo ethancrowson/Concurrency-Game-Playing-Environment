@@ -12,9 +12,13 @@ public class Tile extends StackPane{
     private boolean isLight;
     private ImageView p;
     private ImageView hl;
+    private int x;
+    private int y;
     /** Constructs a new Tile instance. */
-    public Tile(Boolean isLight) {
+    public Tile(Boolean isLight, int x, int y) {
         this.isLight = isLight;
+        this.x = x;
+        this.y = y;
         this.piece = null;
         Rectangle square = new Rectangle(60, 60);
         this.square = square;
@@ -72,4 +76,6 @@ public class Tile extends StackPane{
             hl = null;
         }
     }
+    public int getX(){return this.x;}
+    public int getY(){return this.y;}
 }

@@ -1,6 +1,8 @@
 package com.ecrowson.Chess;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+
 import javafx.scene.image.ImageView;
 
 public abstract class Piece extends ImageView {
@@ -24,5 +26,6 @@ public abstract class Piece extends ImageView {
         ps.remove(this);
     }
     public abstract char getType();
+    public abstract ArrayList<Tile> getMoves(Tile[][] board, int file, int rank);
 }
 

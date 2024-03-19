@@ -1,5 +1,6 @@
 package com.ecrowson.Chess;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Rook extends Piece {
@@ -7,4 +8,45 @@ public class Rook extends Piece {
         super(colour,ps);
     }
     public char getType(){return 'R';}
+    public ArrayList<Tile> getMoves(Tile[][] board, int file, int rank){
+        ArrayList<Tile> pMoves = new ArrayList<>();
+        for (int f = file-1; f > 0; f--){
+                if (board[f][rank].isOccupied()){
+                    if (board[f][rank].getPiece().isWhite != isWhite){
+                        pMoves.add(board[f][rank]);
+                    }
+                    break;
+                }
+                pMoves.add(board[f][rank]);
+        }
+        for (int f = file+1; f < 8; f++){
+            if (board[f][rank].isOccupied()){
+                if (board[f][rank].getPiece().isWhite != isWhite){
+                    pMoves.add(board[f][rank]);
+                }
+                break;
+            }
+            pMoves.add(board[f][rank]);
+        }
+        for (int r = rank-1; r > 0; r--){
+            if (board[file][r].isOccupied()){
+                if (board[file][r].getPiece().isWhite != isWhite){
+                    pMoves.add(board[file][r]);
+                }
+                break;
+            }
+            pMoves.add(board[file][r]);
+        }
+        for (int r = rank+1; r < 8; r++){
+            if (board[file][r].isOccupied()){
+                if (board[file][r].getPiece().isWhite != isWhite){
+                    pMoves.add(board[file][r]);
+                }
+                break;
+            }
+            pMoves.add(board[file][r]);
+        }
+            
+        return pMoves;
+    }
 }

@@ -40,7 +40,7 @@ public class Main extends Application {
             isLight = !isLight;
             for (int rank = 0; rank < 8; rank++) {
                 isLight = !isLight;
-                Tile tile = new Tile(isLight);
+                Tile tile = new Tile(isLight,file,rank);
                 tile.setOnMouseClicked(e -> { // Handles when each tile of the board is clicked on.
 
                     if (selectedTile != null){ //if a piece has been selected to move.
@@ -120,7 +120,7 @@ public class Main extends Application {
         }
     }
     public void possibleMoves(Tile sTile){
-        for (int file = 0; file < 8; file++){
+        /*for (int file = 0; file < 8; file++){
             for (int rank = 0; rank < 8; rank++){
                 Tile currTile = tiles[file][rank];
                 if (currTile.isOccupied()){
@@ -131,6 +131,13 @@ public class Main extends Application {
                     currTile.setHighlight("Move");
                 }
 
+            }
+        }*/
+        for (Tile i : sTile.getPiece().getMoves(tiles,sTile.getX(),sTile.getY())){
+            if (i.isOccupied()){
+                i.setHighlight("Take");
+            }else {
+                i.setHighlight("Move");
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.ecrowson.Chess;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Bishop extends Piece {
@@ -7,4 +8,7 @@ public class Bishop extends Piece {
         super(colour,ps);
     }
     public char getType(){return 'B';}
+    public ArrayList<Tile> getMoves(Tile[][] board, int file, int rank){
+        return null;
+    }
 }
