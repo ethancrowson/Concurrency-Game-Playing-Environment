@@ -32,7 +32,7 @@ public class Tile extends StackPane{
     }
     public void setPiece(Piece piece){
         this.piece = piece;
-        Image i = new Image("Pieces/" + piece.colour + "" + piece.type + ".png");
+        Image i = new Image("Pieces/" + piece.colour + "" + piece.getType() + ".png");
         p = new ImageView(i);
         this.getChildren().add(p);
         /*p.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {

@@ -53,6 +53,7 @@ public class Main extends Application {
                         } 
                         else{
                             if (turnWhite != tile.getPiece().isWhite){
+                                tile.getPiece().kill();
                                 tile.removePiece();
                                 tile.setPiece(selectedTile.getPiece());
                                 selectedTile.removePiece();
@@ -73,7 +74,6 @@ public class Main extends Application {
                     }
                     else {
                         currentPiece = tile.getPiece();
-                        System.out.println(currentPiece.colour + "" + currentPiece.type);
                         selectedTile = tile;
                         tile.selected();
                         possibleMoves(selectedTile);
@@ -86,39 +86,30 @@ public class Main extends Application {
                 tiles[file][rank] = tile;
             }
         }
-        Piece BR = new Piece(board, tiles[0][0], 'B', 'R', ps);
-        Piece BN = new Piece(board, tiles[1][0], 'B', 'N', ps);
-        Piece BB = new Piece(board, tiles[2][0], 'B', 'B', ps);
-        Piece BQ = new Piece(board, tiles[3][0], 'B', 'Q', ps);
-        Piece BK = new Piece(board, tiles[4][0], 'B', 'K', ps);
-        Piece BB2 = new Piece(board, tiles[5][0], 'B', 'B', ps);
-        Piece BN2 = new Piece(board, tiles[6][0], 'B', 'N', ps);
-        Piece BR2 = new Piece(board, tiles[7][0], 'B', 'R', ps);
-        Piece BP1 = new Piece(board, tiles[0][1], 'B', 'P', ps);
-        Piece BP2 = new Piece(board, tiles[1][1], 'B', 'P', ps);
-        Piece BP3 = new Piece(board, tiles[2][1], 'B', 'P', ps);
-        Piece BP4 = new Piece(board, tiles[3][1], 'B', 'P', ps);
-        Piece BP5 = new Piece(board, tiles[4][1], 'B', 'P', ps);
-        Piece BP6 = new Piece(board, tiles[5][1], 'B', 'P', ps);
-        Piece BP7 = new Piece(board, tiles[6][1], 'B', 'P', ps);
-        Piece BP8 = new Piece(board, tiles[7][1], 'B', 'P', ps);
+    
+        tiles[0][0].setPiece(new Rook('B',ps));
+        tiles[1][0].setPiece(new Knight('B',ps));
+        tiles[2][0].setPiece(new Bishop('B',ps));
+        tiles[3][0].setPiece(new Queen('B',ps));
+        tiles[4][0].setPiece(new King('B',ps));
+        tiles[5][0].setPiece(new Knight('B',ps));
+        tiles[6][0].setPiece(new Bishop('B',ps));
+        tiles[7][0].setPiece(new Rook('B',ps));
+        for (int i = 0; i < 8; i++){
+            tiles[i][1].setPiece(new Pawn('B',ps));
+        }
 
-        Piece WR = new Piece(board, tiles[0][7], 'W', 'R', ps);
-        Piece WN = new Piece(board, tiles[1][7], 'W', 'N', ps);
-        Piece WB = new Piece(board, tiles[2][7], 'W', 'B', ps);
-        Piece WQ = new Piece(board, tiles[3][7], 'W', 'Q', ps);
-        Piece WK = new Piece(board, tiles[4][7], 'W', 'K', ps);
-        Piece WB2 = new Piece(board, tiles[5][7], 'W', 'B', ps);
-        Piece WN2 = new Piece(board, tiles[6][7], 'W', 'N', ps);
-        Piece WR2 = new Piece(board, tiles[7][7], 'W', 'R', ps);
-        Piece WP1 = new Piece(board, tiles[0][6], 'W', 'P', ps);
-        Piece WP2 = new Piece(board, tiles[1][6], 'W', 'P', ps);
-        Piece WP3 = new Piece(board, tiles[2][6], 'W', 'P', ps);
-        Piece WP4 = new Piece(board, tiles[3][6], 'W', 'P', ps);
-        Piece WP5 = new Piece(board, tiles[4][6], 'W', 'P', ps);
-        Piece WP6 = new Piece(board, tiles[5][6], 'W', 'P', ps);
-        Piece WP7 = new Piece(board, tiles[6][6], 'W', 'P', ps);
-        Piece WP8 = new Piece(board, tiles[7][6], 'W', 'P', ps);
+        tiles[0][7].setPiece(new Rook('W',ps));
+        tiles[1][7].setPiece(new Knight('W',ps));
+        tiles[2][7].setPiece(new Bishop('W',ps));
+        tiles[3][7].setPiece(new Queen('W',ps));
+        tiles[4][7].setPiece(new King('W',ps));
+        tiles[5][7].setPiece(new Knight('W',ps));
+        tiles[6][7].setPiece(new Bishop('W',ps));
+        tiles[7][7].setPiece(new Rook('W',ps));
+        for (int i = 0; i < 8; i++){
+            tiles[i][6].setPiece(new Pawn('W',ps));
+        }
     }
     public static void pieceClicked(Piece newPiece) {
         if (!selected) {
