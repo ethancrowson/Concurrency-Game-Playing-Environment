@@ -80,6 +80,12 @@ public class Tile extends StackPane{
             isHighlighted = false;
         }
     }
+    public boolean occupiedTakeable(Piece oPiece){
+        if (!isOccupied() || (isOccupied() && oPiece.canTake(this.getPiece()))){
+            return true;
+        }
+        return false;
+    }
     public int getX(){return this.x;}
     public int getY(){return this.y;}
     public boolean getHighlight(){return this.isHighlighted;}

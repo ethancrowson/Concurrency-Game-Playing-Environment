@@ -27,6 +27,12 @@ public abstract class Piece extends ImageView {
     public void kill() {
         ps.remove(this);
     }
+    public boolean canTake(Piece oPiece){
+        if (oPiece.isWhite != this.isWhite){
+            return true;
+        }
+        return false;
+    }
     public boolean getHasMoved(){return this.hasMoved;}
     public void setHasMoved(){this.hasMoved = true;}
     public abstract char getType();
