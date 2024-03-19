@@ -44,27 +44,25 @@ public class Main extends Application {
                 tile.setOnMouseClicked(e -> { // Handles when each tile of the board is clicked on.
 
                     if (selectedTile != null){ //if a piece has been selected to move.
-                        if (!tile.isOccupied()){ //if the tile is free, move the piece.
+                        if (tile.getHighlight() != true){
+                            selectedTile.deselect(); //anything else, deselect.
+                            selectedTile = null;
+                        }
+                        else if (!tile.isOccupied()){ //if the tile is free, move the piece.
                             tile.setPiece(selectedTile.getPiece());
                             selectedTile.removePiece();
                             selectedTile.deselect();
                             selectedTile = null;
                             turnWhite = !turnWhite;
                         } 
-                        else{
-                            if (turnWhite != tile.getPiece().isWhite){
-                                tile.getPiece().kill();
-                                tile.removePiece();
-                                tile.setPiece(selectedTile.getPiece());
-                                selectedTile.removePiece();
-                                selectedTile.deselect();
-                                selectedTile = null;
-                                turnWhite = !turnWhite;
-                            }
-                            else{
-                                selectedTile.deselect();
-                                selectedTile = null;
-                            }
+                        else if (turnWhite != tile.getPiece().isWhite){ //if opponent piece take.
+                            tile.getPiece().kill();
+                            tile.removePiece();
+                            tile.setPiece(selectedTile.getPiece());
+                            selectedTile.removePiece();
+                            selectedTile.deselect();
+                            selectedTile = null;
+                            turnWhite = !turnWhite;  
                         }
                         clearPossibleMoves();
                     }
@@ -120,19 +118,6 @@ public class Main extends Application {
         }
     }
     public void possibleMoves(Tile sTile){
-        /*for (int file = 0; file < 8; file++){
-            for (int rank = 0; rank < 8; rank++){
-                Tile currTile = tiles[file][rank];
-                if (currTile.isOccupied()){
-                    if (currTile.getPiece().isWhite != turnWhite){
-                        currTile.setHighlight("Take");
-                    }
-                } else {
-                    currTile.setHighlight("Move");
-                }
-
-            }
-        }*/
         for (Tile i : sTile.getPiece().getMoves(tiles,sTile.getX(),sTile.getY())){
             if (i.isOccupied()){
                 i.setHighlight("Take");

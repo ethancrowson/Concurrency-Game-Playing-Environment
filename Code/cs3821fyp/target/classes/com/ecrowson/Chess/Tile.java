@@ -14,12 +14,14 @@ public class Tile extends StackPane{
     private ImageView hl;
     private int x;
     private int y;
+    private boolean isHighlighted;
     /** Constructs a new Tile instance. */
     public Tile(Boolean isLight, int x, int y) {
         this.isLight = isLight;
         this.x = x;
         this.y = y;
         this.piece = null;
+        this.isHighlighted = false;
         Rectangle square = new Rectangle(60, 60);
         this.square = square;
         if (isLight){square.setFill(Color.rgb(238, 238, 210));}
@@ -69,13 +71,16 @@ public class Tile extends StackPane{
         Image i = new Image("Effects/highlight" + highlight + ".png");
         hl = new ImageView(i);
         this.getChildren().add(hl);
+        isHighlighted = true;
     }
     public void removeHighlight(){
         if (hl != null){
             this.getChildren().remove(hl);
             hl = null;
+            isHighlighted = false;
         }
     }
     public int getX(){return this.x;}
     public int getY(){return this.y;}
+    public boolean getHighlight(){return this.isHighlighted;}
 }

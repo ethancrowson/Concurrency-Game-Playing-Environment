@@ -9,6 +9,12 @@ public class Pawn extends Piece {
     }
     public char getType(){return 'P';}
     public ArrayList<Tile> getMoves(Tile[][] board, int file, int rank){
-        return null;
+        ArrayList<Tile> pMoves = new ArrayList<>();
+        if(isWhite){
+            pMoves.add(board[file][rank-1]);
+        }else{
+            pMoves.add(board[file][rank+1]);
+        }
+        return pMoves;
     }
 }

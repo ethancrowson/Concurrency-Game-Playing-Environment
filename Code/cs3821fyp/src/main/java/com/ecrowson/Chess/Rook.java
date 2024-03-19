@@ -10,15 +10,17 @@ public class Rook extends Piece {
     public char getType(){return 'R';}
     public ArrayList<Tile> getMoves(Tile[][] board, int file, int rank){
         ArrayList<Tile> pMoves = new ArrayList<>();
-        for (int f = file-1; f > 0; f--){
-                if (board[f][rank].isOccupied()){
-                    if (board[f][rank].getPiece().isWhite != isWhite){
-                        pMoves.add(board[f][rank]);
-                    }
-                    break;
+        //UP
+        for (int f = file-1; f >= 0; f--){
+            if (board[f][rank].isOccupied()){
+                if (board[f][rank].getPiece().isWhite != isWhite){
+                    pMoves.add(board[f][rank]);
                 }
-                pMoves.add(board[f][rank]);
+                break;
+            }
+            pMoves.add(board[f][rank]);
         }
+        //DOWN
         for (int f = file+1; f < 8; f++){
             if (board[f][rank].isOccupied()){
                 if (board[f][rank].getPiece().isWhite != isWhite){
@@ -28,7 +30,8 @@ public class Rook extends Piece {
             }
             pMoves.add(board[f][rank]);
         }
-        for (int r = rank-1; r > 0; r--){
+        //LEFT
+        for (int r = rank-1; r >= 0; r--){
             if (board[file][r].isOccupied()){
                 if (board[file][r].getPiece().isWhite != isWhite){
                     pMoves.add(board[file][r]);
@@ -37,6 +40,7 @@ public class Rook extends Piece {
             }
             pMoves.add(board[file][r]);
         }
+        //RIGHT
         for (int r = rank+1; r < 8; r++){
             if (board[file][r].isOccupied()){
                 if (board[file][r].getPiece().isWhite != isWhite){
