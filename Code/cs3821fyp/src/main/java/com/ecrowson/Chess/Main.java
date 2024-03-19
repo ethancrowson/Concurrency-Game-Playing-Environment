@@ -54,6 +54,7 @@ public class Main extends Application {
                             selectedTile.deselect();
                             selectedTile = null;
                             turnWhite = !turnWhite;
+                            tile.getPiece().setHasMoved();
                         } 
                         else if (turnWhite != tile.getPiece().isWhite){ //if opponent piece take.
                             tile.getPiece().kill();
@@ -63,6 +64,7 @@ public class Main extends Application {
                             selectedTile.deselect();
                             selectedTile = null;
                             turnWhite = !turnWhite;  
+                            tile.getPiece().setHasMoved();
                         }
                         clearPossibleMoves();
                     }

@@ -9,10 +9,12 @@ public abstract class Piece extends ImageView {
     char colour;
     boolean isWhite;
     LinkedList<Piece> ps;
+    boolean hasMoved;
 
     public Piece(char colour, LinkedList<Piece> ps) {
         this.colour = colour;
         this.ps = ps;
+        this.hasMoved = false;
         if (colour == 'W'){
             this.isWhite = true;
         }else {
@@ -25,6 +27,8 @@ public abstract class Piece extends ImageView {
     public void kill() {
         ps.remove(this);
     }
+    public boolean getHasMoved(){return this.hasMoved;}
+    public void setHasMoved(){this.hasMoved = true;}
     public abstract char getType();
     public abstract ArrayList<Tile> getMoves(Tile[][] board, int file, int rank);
 }
