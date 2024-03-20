@@ -55,6 +55,7 @@ public class Main extends Application {
                             selectedTile = null;
                             turnWhite = !turnWhite;
                             tile.getPiece().setHasMoved();
+                            pawnPromotion(tile);
                         } 
                         else if (turnWhite != tile.getPiece().isWhite){ //if opponent piece take.
                             tile.getPiece().kill();
@@ -65,6 +66,7 @@ public class Main extends Application {
                             selectedTile = null;
                             turnWhite = !turnWhite;  
                             tile.getPiece().setHasMoved();
+                            pawnPromotion(tile);
                         }
                         clearPossibleMoves();
                     }
@@ -135,6 +137,23 @@ public class Main extends Application {
 
             }
         }
+    }
+    public void pawnPromotion(Tile backTile){
+        if (backTile.getPiece().getType() == 'P'){
+            if (backTile.getPiece().isWhite && backTile.getY() == 0){
+                //Pawn Promotion White Screen - currently auto makes a queen
+                backTile.getPiece().kill();
+                backTile.removePiece();
+                backTile.setPiece(new Queen('W', ps));
+            }
+            else if (!backTile.getPiece().isWhite && backTile.getY() == 7){
+                //Pawn Promotion Black Screen - currently auto makes a queen
+                backTile.getPiece().kill();
+                backTile.removePiece();
+                backTile.setPiece(new Queen('B', ps));
+            }
+        }
+
     }
 }
 

@@ -41,7 +41,7 @@ public class Pawn extends Piece {
                 }
             }
             if (file != 0){
-                if (board[file-1][rank+1].isOccupied() && canTake(board[file+1][rank+1].getPiece())){
+                if (board[file-1][rank+1].isOccupied() && canTake(board[file-1][rank+1].getPiece())){
                     pMoves.add(board[file-1][rank+1]);
                 }
             }
