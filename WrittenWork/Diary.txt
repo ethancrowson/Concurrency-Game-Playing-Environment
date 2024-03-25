@@ -85,7 +85,7 @@
 - Discussed my approach to the project and my next steps.
 
 31/01/24
-- Conducted deeper research into specific elements nad javafx features that would benefit my chess 
+- Conducted deeper research into specific elements and javafx features that would benefit my chess 
   application development. 
 
 04/02/24
@@ -95,8 +95,68 @@
 - Still unwell and just looked at some of the knowledge around the topic of creating a chat application.
 
 11/02/24
-- developed understanding of chat applications and how they can be built in a java application.
+- Developed understanding of chat applications and how they can be built in a java application.
 
 14/02/24
-- Restructuring of Chess application. Significant progress made. With a much more advanced understanding
-  than before from research, this has become a lot easier to make chess.
+- Planned the restructuring of Chess application. Significant progress made. With a much more advanced 
+  understanding than before from research, this has become a lot easier to make chess.
+
+18/02/24
+- No work accomplished as had to focus my attention on another module.
+
+21/02/24
+- No work accomplished as had to focus my attention on another module.
+
+25/02/24
+- Began the planned restructuring of chess from ground up.
+
+28/02/24
+- Chess now implements a tile class somewhat similar to what was used in tictactoe. Additional functionality
+  and some changed features were necessary.
+
+03/03/24
+- Started work on the write up as it is important to manage that side of the project also with the weightings. 
+
+06/03/24
+- Tidied up the main branch after realising i should have been working inside of the chess-game branch.
+  Merging took substantial time due to some ugly conflicts that were very hard to deal with.
+
+10/03/24
+- Went back to work on my write up to ensure that it wont become a last minute problem. Time must be split 
+  somewhat evenly.
+
+13/03/24
+- I unfortunately got very burnt out with work and decided to take a small break to regain some spirit.
+
+17/03/24
+- With new determination, I worked consistently to fix tile and piece selection. 
+- Clicking a tile now highlights the tile and also shows a small spot on all of the empty tiles that can be moved 
+  to (no specific moves yet).
+- All opposing tiles that can be taken (all also) are also highlighted with a border that you would see in other 
+  chess applications. 
+- This is major progress for the chess application.
+
+20/03/24
+- HUGE progress made again. 
+- Pieces can now move to the highlighted tiles. 
+- There is a turn based system now in which white and black alternate. 
+- Some small bugs were found in the piece movement system involving when taking a piece, the taken piece was never 
+  actually removed but the taking piece instead was just on top.
+- The piece class went under serious reconstruction and is now an abstract class.
+- King, Queen, Rook, Bishop, Knight and Pawn classes were made. These inherit from the the Piece class. This allows
+  for me to hard code the possible moves that each piece will be able to make on the board.
+- A getMove method for each piece was created to acheive this which took the current tile being looked at and all of
+  the possible tiles it could move to with its moveset. Ensuring to avoid indexOutOfRange errors and making sure that
+  pieces blocking would be accounted for. 
+- Pawns take diagonally but move forward, they can also move 2 tiles on their first move.
+- Pawn promotion is now a thing although I haven't designed a interface to select which piece. I hardcoded instead that
+  the pawn would automatically be promoted to a Queen.
+
+
+24/03/24
+- Took a step back and tested my code thoroughly. 
+- Made sure to create a list of interesting chess mechanics that can cause problems and my next steps. This includes
+  mechanics like en-passant, castling, pinned pieces and discovery. Check and CheckMate also will prove challenging.
+
+27/03/24
+-
