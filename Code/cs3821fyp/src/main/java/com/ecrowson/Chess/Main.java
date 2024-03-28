@@ -42,7 +42,7 @@ public class Main extends Application {
                 isLight = !isLight;
                 Tile tile = new Tile(isLight,file,rank);
                 tile.setOnMouseClicked(e -> { // Handles when each tile of the board is clicked on.
-
+                    System.out.println(String.valueOf(tile.getX()) + String.valueOf(tile.getY()));
                     if (selectedTile != null){ //if a piece has been selected to move.
                         if (tile.getHighlight() != true){
                             selectedTile.deselect(); //anything else, deselect.
@@ -51,6 +51,7 @@ public class Main extends Application {
                         else if (!tile.isOccupied()){ //if the tile is free, move the piece.
                             tile.setPiece(selectedTile.getPiece());
                             enPassantFlag(selectedTile, tile);
+                            enPassantTake(selectedTile, tile);
                             selectedTile.removePiece();
                             selectedTile.deselect();
                             selectedTile = null;
@@ -175,6 +176,21 @@ public class Main extends Application {
                     startTile.getPiece().setEnPassant(true);
                 }
             }
+        }
+    }
+    public void enPassantTake(Tile selectedTile, Tile targetTile){
+        if (selectedTile.getPiece().getType() == 'P'){
+            if (targetTile.getX() != selectedTile.getX()){
+                if (selectedTile.getPiece().isWhite){
+                    tiles[targetTile.getX()][targetTile.getY()+1].getPiece().kill();
+                    tiles[targetTile.getX()][targetTile.getY()+1].removePiece();
+                } else {
+                    tiles[targetTile.getX()][targetTile.getX()-1].getPiece().kill();
+                    tiles[targetTile.getX()][targetTile.getX()-1].removePiece();
+                }
+                
+
+            } 
         }
     }
 }
