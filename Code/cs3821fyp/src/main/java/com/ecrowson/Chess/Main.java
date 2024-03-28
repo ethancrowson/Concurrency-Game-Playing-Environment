@@ -50,6 +50,7 @@ public class Main extends Application {
                         }
                         else if (!tile.isOccupied()){ //if the tile is free, move the piece.
                             tile.setPiece(selectedTile.getPiece());
+                            enPassantFlag(selectedTile, tile);
                             selectedTile.removePiece();
                             selectedTile.deselect();
                             selectedTile = null;
@@ -61,6 +62,7 @@ public class Main extends Application {
                             tile.getPiece().kill();
                             tile.removePiece();
                             tile.setPiece(selectedTile.getPiece());
+                            enPassantFlag(selectedTile, tile);
                             selectedTile.removePiece();
                             selectedTile.deselect();
                             selectedTile = null;
@@ -154,6 +156,26 @@ public class Main extends Application {
             }
         }
 
+    }
+    public void enPassantFlag(Tile startTile, Tile endTile){
+        for (int file = 0; file < 8; file++){
+            for (int rank = 0; rank < 8; rank ++){
+                Tile currTile = tiles[file][rank]; 
+                if (currTile.isOccupied()){
+                    Piece currPiece = currTile.getPiece();
+                     if (turnWhite == currPiece.isWhite && currPiece.getEnPassant() == true){
+                        currPiece.setEnPassant(false);
+                     }
+                }
+            }
+        }
+        if (startTile.getPiece().getType() == 'P'){
+            if (startTile.getPiece().getHasMoved() == false){
+                if (endTile.getY() == 3 || endTile.getY() == 4){
+                    startTile.getPiece().setEnPassant(true);
+                }
+            }
+        }
     }
 }
 

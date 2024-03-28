@@ -9,6 +9,7 @@ com\ecrowson\Chess\Tile.class
 com\ecrowson\TicTacToe\TicTacToeApp.class
 com\ecrowson\Chess\Bishop.class
 com\ecrowson\Chess\Main.class
+com\ecrowson\Chess\Check.class
 com\ecrowson\TicTacToe\Game$2.class
 com\ecrowson\TicTacToe\Space.class
 com\ecrowson\Chess\King.class

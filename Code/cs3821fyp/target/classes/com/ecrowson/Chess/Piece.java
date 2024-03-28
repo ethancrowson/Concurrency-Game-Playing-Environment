@@ -10,6 +10,7 @@ public abstract class Piece extends ImageView {
     boolean isWhite;
     LinkedList<Piece> ps;
     boolean hasMoved;
+    boolean enPassant = false;
 
     public Piece(char colour, LinkedList<Piece> ps) {
         this.colour = colour;
@@ -35,6 +36,8 @@ public abstract class Piece extends ImageView {
     }
     public boolean getHasMoved(){return this.hasMoved;}
     public void setHasMoved(){this.hasMoved = true;}
+    public boolean getEnPassant(){return this.enPassant;}
+    public void setEnPassant(boolean result){this.enPassant = result;}
     public abstract char getType();
     public abstract ArrayList<Tile> getMoves(Tile[][] board, int file, int rank);
 }

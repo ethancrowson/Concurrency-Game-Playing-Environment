@@ -12,6 +12,12 @@ public class Pawn extends Piece {
         ArrayList<Tile> pMoves = new ArrayList<>();
         //WHITE PAWN
         if(isWhite){
+            if (board[file-1][rank].isOccupied() && board[file-1][rank].getPiece().getEnPassant() && rank == 3){
+                pMoves.add(board[file-1][rank-1]);
+            }
+            if (board[file+1][rank].isOccupied() && board[file+1][rank].getPiece().getEnPassant() && rank == 3){
+                pMoves.add(board[file+1][rank-1]);
+            }
             if (!board[file][rank-1].isOccupied()){
                 pMoves.add(board[file][rank-1]);
                 if (!hasMoved){
@@ -32,6 +38,12 @@ public class Pawn extends Piece {
             }
         //BLACK PAWN    
         }else {
+            if (board[file-1][rank].isOccupied() && board[file-1][rank].getPiece().getEnPassant() && rank == 4){
+                pMoves.add(board[file-1][rank+1]);
+            }
+            if (board[file+1][rank].isOccupied() && board[file+1][rank].getPiece().getEnPassant() && rank == 4){
+                pMoves.add(board[file+1][rank+1]);
+            }
             if (!board[file][rank+1].isOccupied()){
                 pMoves.add(board[file][rank+1]);
                 if (!hasMoved){
