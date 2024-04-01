@@ -1,37 +1,32 @@
 package com.ecrowson.Chess;
 
-import javafx.application.Application;
-import javafx.scene.Scene;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.EventHandler;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class Main extends Application {
+public class Main {
+    Check check = new Check();
     Pane board = new Pane();
     LinkedList<Piece> ps = new LinkedList<>();
     public static Piece targetPiece;
     public static Piece currentPiece;
     public static boolean selected = false;
+    public static Tile kingTileW;
+    public static Tile kingTileB;
     private Tile[][] tiles = new Tile[8][8]; // Array of Spaces (the TicTacToe board).
     public boolean isLight = true;
     public boolean turnWhite = true;
     private Tile selectedTile;
+    private ArrayList<Tile> legalMoves;
 
-    @Override
-    public void start(Stage stage) throws IOException {
-
-        Scene scene = new Scene(board, 480, 480);
-        stage.setScene(scene);
-        stage.setTitle("Chess");
+    public Main(Pane board, Check check) throws IOException {
+        this.board = board;
+        this.check = check;
         createBoard();
-
-        
-        stage.show();
-    }
-
-    public static void main(String[] args) {
-        launch();
     }
 
     private void createBoard() {
@@ -42,46 +37,10 @@ public class Main extends Application {
                 isLight = !isLight;
                 Tile tile = new Tile(isLight,file,rank);
                 tile.setOnMouseClicked(e -> { // Handles when each tile of the board is clicked on.
-                    System.out.println(String.valueOf(tile.getX()) + String.valueOf(tile.getY()));
-                    if (selectedTile != null){ //if a piece has been selected to move.
-                        if (tile.getHighlight() != true){
-                            selectedTile.deselect(); //anything else, deselect.
-                            selectedTile = null;
-                        }
-                        else if (!tile.isOccupied()){ //if the tile is free, move the piece.
-                            tile.setPiece(selectedTile.getPiece());
-                            enPassantFlag(selectedTile, tile);
-                            enPassantTake(selectedTile, tile);
-                            selectedTile.removePiece();
-                            selectedTile.deselect();
-                            selectedTile = null;
-                            turnWhite = !turnWhite;
-                            tile.getPiece().setHasMoved();
-                            pawnPromotion(tile);
-                        } 
-                        else if (turnWhite != tile.getPiece().isWhite){ //if opponent piece take.
-                            tile.getPiece().kill();
-                            tile.removePiece();
-                            tile.setPiece(selectedTile.getPiece());
-                            enPassantFlag(selectedTile, tile);
-                            selectedTile.removePiece();
-                            selectedTile.deselect();
-                            selectedTile = null;
-                            turnWhite = !turnWhite;  
-                            tile.getPiece().setHasMoved();
-                            pawnPromotion(tile);
-                        }
-                        clearPossibleMoves();
-                    }
-                    else if (!tile.isOccupied()){
-                    }
-                    else if (turnWhite != tile.getPiece().isWhite){
-                    }
-                    else {
-                        currentPiece = tile.getPiece();
-                        selectedTile = tile;
-                        tile.selected();
-                        possibleMoves(selectedTile);
+                    try {
+                        boardManager(tile);
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
                     }
                 });
                 tile.setTranslateX(file * 60);
@@ -115,6 +74,164 @@ public class Main extends Application {
         for (int i = 0; i < 8; i++){
             tiles[i][6].setPiece(new Pawn('W',ps));
         }
+        kingTileB = tiles[4][0];
+        kingTileW = tiles[4][7];
+    }
+    public void boardManager(Tile tile) throws InterruptedException{
+        
+        Task<ArrayList<Tile>> task = new Task<ArrayList<Tile>>() {
+
+            @Override
+            protected ArrayList<Tile> call() throws Exception {
+                if (tile.isOccupied()) {
+                    if (selectedTile == null) {
+                        if (turnWhite == tile.getPiece().isWhite){
+                            selectedTile = tile;
+                            tile.selected();
+                            ArrayList<Tile> pMoves = tile.getPiece().getMoves(tiles,tile.getX(),tile.getY());
+                            //ArrayList<Tile> pMoves = possibleMoves(tile);
+                            /*if (turnWhite == true) {
+                                return check.LegaliseMoves(tiles,kingTileW, pMoves, tile.getPiece(), tile.getX(), tile.getY(), turnWhite);
+                            } else {
+                                return check.LegaliseMoves(tiles,kingTileB, pMoves, tile.getPiece(), tile.getX(), tile.getY(), turnWhite);
+                            }*/
+                            return pMoves;
+                        }
+                    }
+                }
+                return null;
+            }
+        };
+        task.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+
+            @Override
+            public void handle(WorkerStateEvent event) {
+                legalMoves = task.getValue();
+                System.out.println("Moves: "+legalMoves);
+                if (selectedTile != null){
+                    if (legalMoves == null){ 
+                        if (tile.getHighlight() == true)
+                            if (!tile.isOccupied()){ //if the tile is free, move the piece.
+                                System.out.println("move to free");
+                                tile.setPiece(selectedTile.getPiece());
+                                enPassantFlag(selectedTile, tile);
+                                enPassantTake(selectedTile, tile);
+                                castling(selectedTile, tile);
+                                selectedTile.removePiece();
+                                //selectedTile.deselect();
+                                //selectedTile = null;
+                                turnWhite = !turnWhite;
+                                tile.getPiece().setHasMoved();
+                                pawnPromotion(tile);
+                                kingTileUpdate(tile);
+                            } 
+                            else if (turnWhite != tile.getPiece().isWhite){ //if opponent piece take.
+                                tile.getPiece().kill();
+                                tile.removePiece();
+                                tile.setPiece(selectedTile.getPiece());
+                                enPassantFlag(selectedTile, tile);
+                                selectedTile.removePiece();
+                                //selectedTile.deselect();
+                                //selectedTile = null;
+                                turnWhite = !turnWhite;  
+                                tile.getPiece().setHasMoved();
+                                pawnPromotion(tile);
+                                kingTileUpdate(tile);
+                            } 
+                        System.out.println("deselect 1");
+                        selectedTile.deselect(); //anything else, deselect.
+                        selectedTile = null;
+                    }  
+                    else {
+                        Tile kingTile;
+                        if (turnWhite){kingTile = kingTileW;}
+                        else{kingTile = kingTileB;}
+                        System.out.println("test 1");
+                        ArrayList<Tile> lMoves = check.LegaliseMoves(tiles, kingTile, legalMoves, tile.getPiece(), tile.getX(), tile.getY(), turnWhite);
+                        possibleMoves(selectedTile,lMoves);
+                        System.out.println("legalMoves: "+ lMoves);
+                        return;
+                    }
+                } 
+                if(selectedTile != tile){
+                    System.out.println("clear moves");
+                    clearPossibleMoves();
+                }
+            }
+                /*if (selectedTile == null){return;} 
+                if (selectedTile == tile && legalMoves == null){ 
+                    System.out.println("deselect 1");
+                    selectedTile.deselect(); //anything else, deselect.
+                    selectedTile = null;
+                }
+                else if (legalMoves != null){
+                    Tile kingTile;
+                    if (turnWhite){kingTile = kingTileW;}
+                    else{kingTile = kingTileB;}
+                    possibleMoves(selectedTile,check.LegaliseMoves(tiles, kingTile, legalMoves, tile.getPiece(), tile.getX(), tile.getY(), turnWhite));
+
+                }
+                else if (selectedTile == tile){return;}
+                else if (tile.getHighlight() != true){
+                    System.out.println("deselect 2");
+                    selectedTile.deselect(); //anything else, deselect.
+                    selectedTile = null;
+                }
+                else if (!tile.isOccupied()){ //if the tile is free, move the piece.
+                    System.out.println("move to free");
+                    tile.setPiece(selectedTile.getPiece());
+                    enPassantFlag(selectedTile, tile);
+                    enPassantTake(selectedTile, tile);
+                    castling(selectedTile, tile);
+                    selectedTile.removePiece();
+                    selectedTile.deselect();
+                    selectedTile = null;
+                    turnWhite = !turnWhite;
+                    tile.getPiece().setHasMoved();
+                    pawnPromotion(tile);
+                    kingTileUpdate(tile);
+                } 
+                else if (turnWhite != tile.getPiece().isWhite){ //if opponent piece take.
+                    tile.getPiece().kill();
+                    tile.removePiece();
+                    tile.setPiece(selectedTile.getPiece());
+                    enPassantFlag(selectedTile, tile);
+                    selectedTile.removePiece();
+                    selectedTile.deselect();
+                    selectedTile = null;
+                    turnWhite = !turnWhite;  
+                    tile.getPiece().setHasMoved();
+                    pawnPromotion(tile);
+                    kingTileUpdate(tile);
+                }
+                else if (legalMoves == null){
+                    System.out.println("deselect 3");
+                    selectedTile.deselect(); //anything else, deselect.
+                    selectedTile = null;
+                }
+                clearPossibleMoves();
+                
+            } *//* 
+            else if (!tile.isOccupied()){
+            }
+            else if (turnWhite != tile.getPiece().isWhite){
+            }
+            else {
+                currentPiece = tile.getPiece();
+                selectedTile = tile;
+                tile.selected();
+                ArrayList<Tile> pMoves = possibleMoves(selectedTile);
+                if (turnWhite){
+                    check.LegaliseMoves(tiles, kingTileW, pMoves, tile.getPiece(), tile.getX(),tile.getY(), turnWhite);
+                } else {
+                    check.LegaliseMoves(tiles, kingTileB, pMoves, tile.getPiece(), tile.getX(),tile.getY(), turnWhite);
+                }
+            }*/
+            //System.out.println(String.valueOf(kingTileB.getX())+ String.valueOf(kingTileB.getY()) + String.valueOf(kingTileW.getX()) + String.valueOf(kingTileW.getY()));
+            
+        });
+        Thread th = new Thread(task); // Thread to run the task in the background
+        th.start();
     }
     public static void pieceClicked(Piece newPiece) {
         if (!selected) {
@@ -124,14 +241,17 @@ public class Main extends Application {
             targetPiece = newPiece;
         }
     }
-    public void possibleMoves(Tile sTile){
-        for (Tile i : sTile.getPiece().getMoves(tiles,sTile.getX(),sTile.getY())){
+    public ArrayList<Tile> possibleMoves(Tile sTile, ArrayList<Tile> pMoves){
+        //ArrayList<Tile> pMoves = sTile.getPiece().getMoves(tiles,sTile.getX(),sTile.getY());
+        for (Tile i : pMoves){
             if (i.isOccupied()){
                 i.setHighlight("Take");
             }else {
                 i.setHighlight("Move");
             }
         }
+        
+        return pMoves;
     }
     public void clearPossibleMoves(){
         for (int file = 0; file < 8; file++){
@@ -191,6 +311,25 @@ public class Main extends Application {
                 
 
             } 
+        }
+    }
+    public void castling(Tile selectedTile, Tile targetTile){
+        if (selectedTile.getPiece().getType() == 'K'){ 
+            if (targetTile.getX() == 2){
+                tiles[3][selectedTile.getY()].setPiece(tiles[0][selectedTile.getY()].getPiece());
+                tiles[0][selectedTile.getY()].removePiece();
+            }
+            if (targetTile.getX() == 6){
+                tiles[5][selectedTile.getY()].setPiece(tiles[7][selectedTile.getY()].getPiece());
+                tiles[7][selectedTile.getY()].removePiece();
+            }
+        }
+    }
+    public void kingTileUpdate(Tile tile){
+        if (tile.getPiece().getType() == 'K' && tile.getPiece().isWhite){
+            kingTileW = tile;
+        } else if (tile.getPiece().getType() == 'K' && !tile.getPiece().isWhite){
+            kingTileB = tile;
         }
     }
 }

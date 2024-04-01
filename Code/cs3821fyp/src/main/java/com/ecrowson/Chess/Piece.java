@@ -10,7 +10,7 @@ public abstract class Piece extends ImageView {
     boolean isWhite;
     LinkedList<Piece> ps;
     boolean hasMoved;
-    boolean enPassant = false;
+    private boolean enPassant = false;
 
     public Piece(char colour, LinkedList<Piece> ps) {
         this.colour = colour;

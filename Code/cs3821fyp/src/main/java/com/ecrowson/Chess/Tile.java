@@ -59,6 +59,7 @@ public class Tile extends StackPane{
         } else {
             square.setFill(Color.rgb(185, 202, 67));
         }
+        System.out.println("selected tile");
     }
     public void deselect(){
         if (isLight){
@@ -70,8 +71,11 @@ public class Tile extends StackPane{
     public void setHighlight(String highlight){
         Image i = new Image("Effects/highlight" + highlight + ".png");
         hl = new ImageView(i);
+        isHighlighted = true;
+        System.out.println("set highlight: "+highlight);
         this.getChildren().add(hl);
         isHighlighted = true;
+        
     }
     public void removeHighlight(){
         if (hl != null){
@@ -88,5 +92,6 @@ public class Tile extends StackPane{
     }
     public int getX(){return this.x;}
     public int getY(){return this.y;}
+    public String toString(){return String.valueOf(getX())+String.valueOf(getY());}
     public boolean getHighlight(){return this.isHighlighted;}
 }
