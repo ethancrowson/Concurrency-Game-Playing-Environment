@@ -43,6 +43,21 @@ public class Check {
         }
         return pseudoLegalMoves;
     }
+    public synchronized boolean checkMate(Tile[][] board, Tile kingTile, boolean turnWhite){
+        ArrayList<Tile> possibleMoves = new ArrayList<Tile>();
+        for (int f = 0; f <8; f++){
+            for (int r = 0; r < 8; r++){
+                Tile t = board[f][r];
+                if (t.isOccupied() && turnWhite == t.getPiece().isWhite){
+                    for (Tile tt: LegaliseMoves(board, kingTile, t.getPiece().getMoves(board,t.getX(),t.getY()),t.getPiece(),t.getX(),t.getY(),turnWhite)){
+                        possibleMoves.add(tt);
+                    }
+                }
+            }
+        }
+        if (possibleMoves.size() == 0){System.out.println("CHECKMATE");return true;}
+        return false;
+    }
     /*public synchronized ArrayList<Tile> LegaliseMoves(Tile[][] board, Tile kingTile, ArrayList<Tile> pseudoLegalMoves, Piece testPiece, int file, int rank, boolean turnWhite){
         ArrayList<Tile> opponentMoves = new ArrayList<>();
         Piece temp = null;

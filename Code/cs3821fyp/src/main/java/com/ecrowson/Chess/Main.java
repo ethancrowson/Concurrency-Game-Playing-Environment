@@ -22,6 +22,7 @@ public class Main {
     public boolean turnWhite = true;
     private Tile selectedTile;
     private ArrayList<Tile> legalMoves;
+    private boolean checkMate;
 
     public Main(Pane board, Check check) throws IOException {
         this.board = board;
@@ -83,6 +84,8 @@ public class Main {
 
             @Override
             protected ArrayList<Tile> call() throws Exception {
+                System.out.println(tile);
+                if (checkMate){checkMateScreen();return null;}
                 if (tile.isOccupied()) {
                     if (selectedTile == null) {
                         if (turnWhite == tile.getPiece().isWhite){
@@ -106,8 +109,12 @@ public class Main {
 
             @Override
             public void handle(WorkerStateEvent event) {
+                if (checkMate){return;}
                 legalMoves = task.getValue();
                 System.out.println("Moves: "+legalMoves);
+                Tile kingTile;
+                if (turnWhite){kingTile = kingTileW;}
+                else{kingTile = kingTileB;}
                 if (selectedTile != null){
                     if (legalMoves == null){ 
                         if (tile.getHighlight() == true)
@@ -141,12 +148,9 @@ public class Main {
                         System.out.println("deselect 1");
                         selectedTile.deselect(); //anything else, deselect.
                         selectedTile = null;
+                        checkMate = check.checkMate(tiles,kingTile,turnWhite);
                     }  
                     else {
-                        Tile kingTile;
-                        if (turnWhite){kingTile = kingTileW;}
-                        else{kingTile = kingTileB;}
-                        System.out.println("test 1");
                         ArrayList<Tile> lMoves = check.LegaliseMoves(tiles, kingTile, legalMoves, tile.getPiece(), tile.getX(), tile.getY(), turnWhite);
                         possibleMoves(selectedTile,lMoves);
                         System.out.println("legalMoves: "+ lMoves);
@@ -331,6 +335,9 @@ public class Main {
         } else if (tile.getPiece().getType() == 'K' && !tile.getPiece().isWhite){
             kingTileB = tile;
         }
+    }
+    public void checkMateScreen(){
+        
     }
 }
 

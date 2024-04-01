@@ -51,31 +51,39 @@ public class King extends Piece {
             }
         }
         // WHITE CASTLING LEFT
-        if (this.hasMoved == false && board[0][7].getPiece().getHasMoved() == false){
-            if (!board[file-1][rank].isOccupied() && !board[file-2][rank].isOccupied() && !board[file-3][rank].isOccupied()){
-                //CHECK IF TILES INBETWEEN ARE POTENTIAL CHECKS (IF SO NO MOVE)
-                pMoves.add(board[file-2][rank]);
+        if (this.hasMoved == false && board[0][7].isOccupied()){
+            if(board[0][7].getPiece().getHasMoved() == false){
+                if (!board[file-1][rank].isOccupied() && !board[file-2][rank].isOccupied() && !board[file-3][rank].isOccupied()){
+                    //CHECK IF TILES INBETWEEN ARE POTENTIAL CHECKS (IF SO NO MOVE)
+                    pMoves.add(board[file-2][rank]);
+                }
             }
         }
         // WHITE CASTLING RIGHT
-        if (this.hasMoved == false && board[7][7].getPiece().getHasMoved() == false){
-            if (!board[file+1][rank].isOccupied() && !board[file+2][rank].isOccupied()){
-                //CHECK IF TILES INBETWEEN ARE POTENTIAL CHECKS (IF SO NO MOVE)
-                pMoves.add(board[file+2][rank]);
+        if (this.hasMoved == false && board[7][7].isOccupied()){
+            if (board[7][7].getPiece().getHasMoved() == false){
+                if (!board[file+1][rank].isOccupied() && !board[file+2][rank].isOccupied()){
+                    //CHECK IF TILES INBETWEEN ARE POTENTIAL CHECKS (IF SO NO MOVE)
+                    pMoves.add(board[file+2][rank]);
+                }
             }
         }
         // BLACK CASTLING LEFT
-        if (this.hasMoved == false && board[0][7].getPiece().getHasMoved() == false){
-            if (!board[file-1][rank].isOccupied() && !board[file-2][rank].isOccupied() && !board[file-3][rank].isOccupied()){
-                //CHECK IF TILES INBETWEEN ARE POTENTIAL CHECKS (IF SO NO MOVE)
-                pMoves.add(board[file-2][rank]);
+        if (this.hasMoved == false && board[0][0].isOccupied()){
+            if (board[0][0].getPiece().getHasMoved() == false){
+                if (!board[file-1][rank].isOccupied() && !board[file-2][rank].isOccupied() && !board[file-3][rank].isOccupied()){
+                    //CHECK IF TILES INBETWEEN ARE POTENTIAL CHECKS (IF SO NO MOVE)
+                    pMoves.add(board[file-2][rank]);
+                }
             }
         }
         // BLACK CASTLING RIGHT
-        if (this.hasMoved == false && board[7][7].getPiece().getHasMoved() == false){
-            if (!board[file+1][rank].isOccupied() && !board[file+2][rank].isOccupied()){
-                //CHECK IF TILES INBETWEEN ARE POTENTIAL CHECKS (IF SO NO MOVE)
-                pMoves.add(board[file+2][rank]);
+        if (this.hasMoved == false && board[7][0].isOccupied()){
+            if (board[7][0].getPiece().getHasMoved() == false){
+                if (!board[file+1][rank].isOccupied() && !board[file+2][rank].isOccupied()){
+                    //CHECK IF TILES INBETWEEN ARE POTENTIAL CHECKS (IF SO NO MOVE)
+                    pMoves.add(board[file+2][rank]);
+                }
             }
         }
         return pMoves;
