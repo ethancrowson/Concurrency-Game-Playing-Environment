@@ -55,6 +55,7 @@ public class Check {
                 }
             }
         }
+        System.out.println(possibleMoves.size()+", "+ turnWhite);
         if (possibleMoves.size() == 0){System.out.println("CHECKMATE");return true;}
         return false;
     }

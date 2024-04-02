@@ -15,6 +15,7 @@ public class Main {
     public static Piece targetPiece;
     public static Piece currentPiece;
     public static boolean selected = false;
+    public static Tile kingTile;
     public static Tile kingTileW;
     public static Tile kingTileB;
     private Tile[][] tiles = new Tile[8][8]; // Array of Spaces (the TicTacToe board).
@@ -57,8 +58,8 @@ public class Main {
         tiles[2][0].setPiece(new Bishop('B',ps));
         tiles[3][0].setPiece(new Queen('B',ps));
         tiles[4][0].setPiece(new King('B',ps));
-        tiles[5][0].setPiece(new Knight('B',ps));
-        tiles[6][0].setPiece(new Bishop('B',ps));
+        tiles[5][0].setPiece(new Bishop('B',ps));
+        tiles[6][0].setPiece(new Knight('B',ps));
         tiles[7][0].setPiece(new Rook('B',ps));
         for (int i = 0; i < 8; i++){
             tiles[i][1].setPiece(new Pawn('B',ps));
@@ -69,8 +70,8 @@ public class Main {
         tiles[2][7].setPiece(new Bishop('W',ps));
         tiles[3][7].setPiece(new Queen('W',ps));
         tiles[4][7].setPiece(new King('W',ps));
-        tiles[5][7].setPiece(new Knight('W',ps));
-        tiles[6][7].setPiece(new Bishop('W',ps));
+        tiles[5][7].setPiece(new Bishop('W',ps));
+        tiles[6][7].setPiece(new Knight('W',ps));
         tiles[7][7].setPiece(new Rook('W',ps));
         for (int i = 0; i < 8; i++){
             tiles[i][6].setPiece(new Pawn('W',ps));
@@ -84,20 +85,13 @@ public class Main {
 
             @Override
             protected ArrayList<Tile> call() throws Exception {
-                System.out.println(tile);
-                if (checkMate){checkMateScreen();return null;}
+                if (checkMate){return null;}
                 if (tile.isOccupied()) {
                     if (selectedTile == null) {
                         if (turnWhite == tile.getPiece().isWhite){
                             selectedTile = tile;
                             tile.selected();
                             ArrayList<Tile> pMoves = tile.getPiece().getMoves(tiles,tile.getX(),tile.getY());
-                            //ArrayList<Tile> pMoves = possibleMoves(tile);
-                            /*if (turnWhite == true) {
-                                return check.LegaliseMoves(tiles,kingTileW, pMoves, tile.getPiece(), tile.getX(), tile.getY(), turnWhite);
-                            } else {
-                                return check.LegaliseMoves(tiles,kingTileB, pMoves, tile.getPiece(), tile.getX(), tile.getY(), turnWhite);
-                            }*/
                             return pMoves;
                         }
                     }
@@ -112,14 +106,12 @@ public class Main {
                 if (checkMate){return;}
                 legalMoves = task.getValue();
                 System.out.println("Moves: "+legalMoves);
-                Tile kingTile;
                 if (turnWhite){kingTile = kingTileW;}
                 else{kingTile = kingTileB;}
                 if (selectedTile != null){
                     if (legalMoves == null){ 
                         if (tile.getHighlight() == true)
                             if (!tile.isOccupied()){ //if the tile is free, move the piece.
-                                System.out.println("move to free");
                                 tile.setPiece(selectedTile.getPiece());
                                 enPassantFlag(selectedTile, tile);
                                 enPassantTake(selectedTile, tile);
@@ -145,20 +137,21 @@ public class Main {
                                 pawnPromotion(tile);
                                 kingTileUpdate(tile);
                             } 
-                        System.out.println("deselect 1");
                         selectedTile.deselect(); //anything else, deselect.
                         selectedTile = null;
+                        if (kingTile == kingTileW){kingTile = kingTileB;}
+                        else if (kingTile != kingTileW){kingTile = kingTileW;}
                         checkMate = check.checkMate(tiles,kingTile,turnWhite);
+                        System.out.println(checkMate+","+turnWhite+","+kingTile.getPiece().isWhite);
+                        if (checkMate){checkMateScreen();}
                     }  
                     else {
                         ArrayList<Tile> lMoves = check.LegaliseMoves(tiles, kingTile, legalMoves, tile.getPiece(), tile.getX(), tile.getY(), turnWhite);
                         possibleMoves(selectedTile,lMoves);
-                        System.out.println("legalMoves: "+ lMoves);
                         return;
                     }
                 } 
                 if(selectedTile != tile){
-                    System.out.println("clear moves");
                     clearPossibleMoves();
                 }
             }
@@ -337,7 +330,7 @@ public class Main {
         }
     }
     public void checkMateScreen(){
-        
+        kingTile.inCheck();
     }
 }
 

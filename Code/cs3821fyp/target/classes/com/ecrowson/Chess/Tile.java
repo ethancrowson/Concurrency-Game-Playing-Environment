@@ -72,7 +72,6 @@ public class Tile extends StackPane{
         Image i = new Image("Effects/highlight" + highlight + ".png");
         hl = new ImageView(i);
         isHighlighted = true;
-        System.out.println("set highlight: "+highlight);
         this.getChildren().add(hl);
         isHighlighted = true;
         
@@ -89,6 +88,9 @@ public class Tile extends StackPane{
             return true;
         }
         return false;
+    }
+    public void inCheck(){
+        square.setFill(Color.rgb(209, 37, 23));
     }
     public int getX(){return this.x;}
     public int getY(){return this.y;}
