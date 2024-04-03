@@ -11,7 +11,7 @@ public class Pawn extends Piece {
     public ArrayList<Tile> getMoves(Tile[][] board, int file, int rank){
         ArrayList<Tile> pMoves = new ArrayList<>();
         //WHITE PAWN
-        if(isWhite){
+        if(isWhite && rank != 0){
             if (!board[file][rank-1].isOccupied()){
                 pMoves.add(board[file][rank-1]);
                 if (!hasMoved){
@@ -37,7 +37,7 @@ public class Pawn extends Piece {
                 }
             }
         //BLACK PAWN    
-        }else {
+        }else if (!isWhite && rank != 7){
             if (!board[file][rank+1].isOccupied()){
                 pMoves.add(board[file][rank+1]);
                 if (!hasMoved){

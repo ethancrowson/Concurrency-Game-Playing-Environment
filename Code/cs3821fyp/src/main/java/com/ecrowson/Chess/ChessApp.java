@@ -11,12 +11,18 @@ public class ChessApp extends Application{
         Check check = new Check();
         // Game 1
         Pane board1 = new Pane();
-        new Main(board1, check);
+        new ChessGame(board1, check);
         Stage.setScene(new Scene(board1, 480, 480));
         Stage.setTitle("Chess");
         Stage.show();
 
         // Game 2
+        Stage Stage2 = new Stage();
+        Pane board2 = new Pane();
+        new ChessGame(board2, check);
+        Stage2.setScene(new Scene(board2, 480, 480));
+        Stage2.setTitle("Chess2");
+        Stage2.show();
     }
 
     /** Launches the application */

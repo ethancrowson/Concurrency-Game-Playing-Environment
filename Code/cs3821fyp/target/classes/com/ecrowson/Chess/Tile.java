@@ -41,11 +41,6 @@ public class Tile extends StackPane{
         Image i = new Image("Pieces/" + piece.colour + "" + piece.getType() + ".png");
         p = new ImageView(i);
         this.getChildren().add(p);
-        /*p.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            System.out.println(piece.colour + "" + piece.type);
-            Main.pieceClicked(piece);
-            event.consume();
-        });*/
     }
     public void removePiece(){
         if (piece != null){
@@ -59,7 +54,6 @@ public class Tile extends StackPane{
         } else {
             square.setFill(Color.rgb(185, 202, 67));
         }
-        System.out.println("selected tile");
     }
     public void deselect(){
         if (isLight){
@@ -71,7 +65,6 @@ public class Tile extends StackPane{
     public void setHighlight(String highlight){
         Image i = new Image("Effects/highlight" + highlight + ".png");
         hl = new ImageView(i);
-        isHighlighted = true;
         this.getChildren().add(hl);
         isHighlighted = true;
         

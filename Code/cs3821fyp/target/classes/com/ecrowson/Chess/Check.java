@@ -55,42 +55,7 @@ public class Check {
                 }
             }
         }
-        System.out.println(possibleMoves.size()+", "+ turnWhite);
-        if (possibleMoves.size() == 0){System.out.println("CHECKMATE");return true;}
+        if (possibleMoves.size() == 0){return true;}
         return false;
     }
-    /*public synchronized ArrayList<Tile> LegaliseMoves(Tile[][] board, Tile kingTile, ArrayList<Tile> pseudoLegalMoves, Piece testPiece, int file, int rank, boolean turnWhite){
-        ArrayList<Tile> opponentMoves = new ArrayList<>();
-        Piece temp = null;
-        for (Tile pMove: pseudoLegalMoves){
-            if (pMove.isOccupied()){
-                temp = pMove.getPiece();
-            }
-            pMove.setPiece(testPiece);
-            board[file][rank].removePiece();
-            System.out.println("test2");
-            for (int f = 0; f < 8; f++){
-                for (int r = 0; r < 8; r++){
-                    if (board[f][r].isOccupied()){
-                        Piece p = board[f][r].getPiece();
-                        if (p.isWhite != turnWhite){
-                            opponentMoves.addAll(p.getMoves(board,f,r));
-                            for (Tile t: opponentMoves){
-                                if (t == kingTile){
-                                    pseudoLegalMoves.remove(pMove);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            board[file][rank].setPiece(testPiece);
-            pMove.removePiece();
-            if (temp != null){
-                pMove.setPiece(temp);
-                temp = null;
-            }
-        }
-        return pseudoLegalMoves;
-    }*/
 }
