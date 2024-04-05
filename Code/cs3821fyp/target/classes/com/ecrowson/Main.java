@@ -141,11 +141,10 @@ public class Main extends Application {
         Stage.show();
     }
 
-    
-    /** 
+    /**
      * Launches the application and calls start().
      * 
-     * @param args arguments 
+     * @param args arguments
      */
     public static void main(String[] args) {
         launch();

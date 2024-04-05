@@ -73,13 +73,14 @@ public class Tile extends StackPane {
      * @param piece the piece to be set to the tile.
      */
     public void setPiece(Piece piece) {
-        if (piece != null){
+        if (piece != null) {
             this.piece = piece;
             Image i = new Image("Pieces/" + piece.colour + "" + piece.getType() + ".png");
             p = new ImageView(i);
             this.getChildren().add(p);
         }
     }
+
     /**
      * Remove the piece from the tile and sets the piece value to null.
      */

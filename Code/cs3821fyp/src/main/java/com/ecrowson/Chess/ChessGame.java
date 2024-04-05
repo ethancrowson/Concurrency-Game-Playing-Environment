@@ -49,8 +49,8 @@ public class ChessGame {
     /**
      * Constructs the game instance that will handle chess. Calls createBoard().
      * 
-     * @param board the window that the board will be generated upon.
-     * @param check the shared Check instance between chess instances.
+     * @param board    the window that the board will be generated upon.
+     * @param check    the shared Check instance between chess instances.
      * @param computer the number of computer bots that will play the game (0/1/2).
      */
     public ChessGame(Pane board, Check check, int computer) {
@@ -144,7 +144,9 @@ public class ChessGame {
      *                              the task.
      */
     public void boardManager(Tile tile) throws InterruptedException {
-        if (checkMate != 0){return;}
+        if (checkMate != 0) {
+            return;
+        }
         // Task to handle the move generation in the background.
         Task<ArrayList<Tile>> task = new Task<ArrayList<Tile>>() {
 
@@ -505,13 +507,13 @@ public class ChessGame {
         } else {
             if (compMoves != null && compMoves.size() > 0) {
                 // If selected tiles has makeable moves then make a random move from this set.
-                while (rTile == null){
+                while (rTile == null) {
                     rTile = compMoves.get(rand.nextInt(compMoves.size()));
-                    if (rTile == kingTile){
+                    if (rTile == kingTile) {
                         rTile = null;
                     }
                 }
-                
+
             } else {
                 // Otherwise reset the selected Tile by clicking the first unoccupied tile.
                 for (int f = 0; f < 8; f++) {

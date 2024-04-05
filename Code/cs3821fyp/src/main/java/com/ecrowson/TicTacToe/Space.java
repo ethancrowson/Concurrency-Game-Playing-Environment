@@ -40,13 +40,14 @@ public class Space extends StackPane {
         }
     }
 
-    /** 
-     * Resets the value of the Space back to blank. */
+    /**
+     * Resets the value of the Space back to blank.
+     */
     public void resetValue() {
         text.setText("");
     }
 
-    /** 
+    /**
      * Returns the text value of the space.
      * 
      * @return the string held within the text of the space.
@@ -73,7 +74,7 @@ public class Space extends StackPane {
         return getTranslateY() + 80;
     }
 
-    /** 
+    /**
      * Returns if the space has already been assigned a value.
      * 
      * @return if the text value of the space is empty.
