@@ -1,18 +1,16 @@
 # Final Year Project
-TicTacToe and Chess application were developed independently and so currently do not 
-share a menu to choose between which to run. This means the main class run by 
-'mvn clean javafx:run' needs to be updated depending on which you want to run.
+A Concurreny Based Game Environment
 
-Interim Video Link: https://www.youtube.com/watch?v=VhY4edE1UYU
+Demonstration and Explanation Video: https://www.youtube.com/watch?v=VhY4edE1UYU
 
-inital setup (using terminal):
+Inital setup (using terminal):
 - cd into PROJECT\Code\cs3821fyp
 - install by typing 'mvn clean install'
 
-To run the Tic-tac-toe Application (The main application developed for interim).
-- The main class in pom.xml for javfx-maven-plugin must be set to to 'com.ecrowson.Chess.Main'.
-- The code is then run by typing 'mvn clean javafx:run' into the terminal.
-
-To run the Chess Application (not too much development yet).
-- The main class in pom.xml for javfx-maven-plugin must be set to to 'com.ecrowson.Chess.Main'.
-- The code is then run by typing 'mvn clean javafx:run' into the terminal.
+Use Guide:
+- Run the application by typing 'mvn clean javafx:run' into the terminal.
+- This will load up the main menu screen in which you can play multiple game instances from. 
+- This includes Chess with either 2 human player, 1 human player or 2 computers, and Tic-Tac-Toe (Noughts and Crosses) with 2 human players.
+- With Chess you can selected how many computers play with the provided drop down choice box.
+- Clicking the 'New Instance' buttons will load up new instances of each game.
+- You can load as many of each as you want and have multiple chess games running with varied amounts of computers.
