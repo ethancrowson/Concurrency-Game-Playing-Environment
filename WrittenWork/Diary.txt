@@ -159,4 +159,22 @@
   mechanics like en-passant, castling, pinned pieces and discovery. Check and CheckMate also will prove challenging.
 
 27/03/24
+- Worked on the report as well as did some thorough bug tests on the chess application.
+
+31/03/24
+- Commits made have been very minimal but contain a lot of updates.
+- En-Passant implemented and tested.
+- I have began working on the check class that all game instances will concurrently utilise.
+
+03/04/24
+- Check class created with a legaliseMoves method which implements rules of check.
+- Checkmate method created inside of this check class which observes if the game has reached a checkmate.
+- Computer bot made which makes a random move on the board. Plays as black.
+- Checkmate has a visual in which the king in checkmate is highlighted red.
+- Copious testing accompanied by bug fixes.
+
+07/04/24
+-
+
+11/04/24
 -
