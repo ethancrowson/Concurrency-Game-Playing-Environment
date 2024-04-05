@@ -4,9 +4,7 @@ com\ecrowson\TicTacToe\WinLine.class
 com\ecrowson\Chess\Pawn.class
 com\ecrowson\Chess\Rook.class
 com\ecrowson\Main$2.class
-com\ecrowson\Chess\ChessApp.class
 com\ecrowson\Chess\Tile.class
-com\ecrowson\TicTacToe\TicTacToeApp.class
 com\ecrowson\Main.class
 com\ecrowson\Chess\Bishop.class
 com\ecrowson\TicTacToe\GameStatus.class

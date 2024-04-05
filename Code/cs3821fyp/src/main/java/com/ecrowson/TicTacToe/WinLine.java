@@ -17,9 +17,9 @@ public class WinLine {
         this.spaces = spaces;
     }
 
-
     /**
-     * Checks to see if the line's corresponding spaces match in value. If a line has been
+     * Checks to see if the line's corresponding spaces match in value. If a line
+     * has been
      * completed.
      * 
      * @return Boolean If a given line has all spaces with the same value.
@@ -37,6 +37,7 @@ public class WinLine {
      * Returns the space associated with the provided index in the line.
      * 
      * @param i index of the space being requested.
+     * @return the space at index i.
      */
     public Space getSpace(int i) {
         return spaces[i];

@@ -17,9 +17,10 @@ public class GameStatus {
     /**
      * Checks the status of the game ( Won / Tied / In Play )
      * 
-     * @param lines A list of the possible winning line combinations.
+     * @param lines  A list of the possible winning line combinations.
      * @param spaces The 2D array representation of the spaces on the board.
-     * @return WinLine Either the winning line (result = win), the first row of the board (result =
+     * @return WinLine Either the winning line (result = win), the first row of the
+     *         board (result =
      *         draw) or null (no win or draw).
      */
     public synchronized WinLine checkStatus(List<WinLine> lines, Space[][] spaces) {
@@ -34,7 +35,8 @@ public class GameStatus {
 
     /** Checks if the game is won. If a winning line is completed. */
     private WinLine isWin() {
-        // Checking if there is a winning line formed on the board. If so displays Win Screen.
+        // Checking if there is a winning line formed on the board. If so displays Win
+        // Screen.
         for (WinLine line : lines) {
             if (line.isComplete()) {
                 return line;
@@ -45,7 +47,8 @@ public class GameStatus {
 
     /** Checks if the game is tied. All spaces on the board are occupied. */
     private WinLine isDraw() {
-        // Checks if there is a draw/stalemate. loops over every space and if all are occupied but
+        // Checks if there is a draw/stalemate. loops over every space and if all are
+        // occupied but
         // no win then returns true and displays draw screen.
         for (Space[] spaceRow : spaces) {
             for (Space space : spaceRow) {

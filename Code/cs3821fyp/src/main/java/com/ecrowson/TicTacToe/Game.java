@@ -46,8 +46,9 @@ public class Game {
     /**
      * Creates a new Game.
      * 
-     * @param board The pane the game GUI will be created and played on.
-     * @param gamestatus The shared object between game instances that checks the status of a game.
+     * @param board      The pane the game GUI will be created and played on.
+     * @param gamestatus The shared object between game instances that checks the
+     *                   status of a game.
      */
     public Game(Pane board, GameStatus gamestatus) {
         this.gamestatus = gamestatus;
@@ -58,7 +59,8 @@ public class Game {
     }
 
     /**
-     * Creates the board the game will be played upon and any objects needed before game playing can
+     * Creates the board the game will be played upon and any objects needed before
+     * game playing can
      * commence.
      */
     private void createBoard() {
@@ -97,12 +99,14 @@ public class Game {
     }
 
     /**
-     * Handles what happens when a Space object on the board is clicked (Manages the turn by turn
+     * Handles what happens when a Space object on the board is clicked (Manages the
+     * turn by turn
      * workings of the game).
      * 
      * @param space The space the user has clicked on with the mouse.
-     * @throws InterruptedException Thrown when the thread is interrupted, either before or during
-     *         the task.
+     * @throws InterruptedException Thrown when the thread is interrupted, either
+     *                              before or during
+     *                              the task.
      */
     private void gameManager(Space space) throws InterruptedException {
         if (!space.isOccupied()) {
@@ -198,7 +202,9 @@ public class Game {
         });
     }
 
-    /** Handles the screen that is displayed when the result of the game is a tie. */
+    /**
+     * Handles the screen that is displayed when the result of the game is a tie.
+     */
     private void drawScreen() {
         numDraws++;
         drawCount.setText("Draw\n" + numDraws);
@@ -215,7 +221,8 @@ public class Game {
     }
 
     /**
-     * Resets all the values of the spaces on the board without needing them to be initiated again.
+     * Resets all the values of the spaces on the board without needing them to be
+     * initiated again.
      * Swaps whose turn it is to start.
      */
     private void resetBoard() {
