@@ -176,97 +176,7 @@ public class ChessGame {
                     return; // If checkmate then no more game playing.
                 }
                 pseudolegalMoves = task.getValue();
-                kingTile = turnWhite ? kingTileW : kingTileB;
-                /*
-                 * if (selectedTile != null) {
-                 * if (pseudolegalMoves == null) {
-                 * if (tile.getHighlight() == true) // If the tile is a possbile move.
-                 * if (!tile.isOccupied()) { // If the tile is free, move the selected piece to
-                 * the tile.
-                 * tile.setPiece(selectedTile.getPiece());
-                 * enPassantFlag(selectedTile, tile);
-                 * enPassantTake(selectedTile, tile);
-                 * castling(selectedTile, tile);
-                 * selectedTile.getPiece().setHasMoved();
-                 * selectedTile.removePiece();
-                 * turnWhite = !turnWhite;
-                 * pawnPromotion(tile);
-                 * kingTileUpdate(tile);
-                 * } else if (turnWhite != tile.getPiece().isWhite) { // If tile contains an
-                 * opponent piece
-                 * // then take.
-                 * tile.getPiece().kill();
-                 * tile.removePiece();
-                 * tile.setPiece(selectedTile.getPiece());
-                 * enPassantFlag(selectedTile, tile);
-                 * selectedTile.removePiece();
-                 * turnWhite = !turnWhite;
-                 * tile.getPiece().setHasMoved();
-                 * kingTileUpdate(tile);
-                 * }
-                 * 
-                 * selectedTile.deselect(); // Deselect selectedTile.
-                 * selectedTile = null;
-                 * if (kingTile == kingTileW) {
-                 * kingTile = kingTileB;
-                 * } // Setting kingTile to point to correct king.
-                 * else if (kingTile != kingTileW) {
-                 * kingTile = kingTileW;
-                 * }
-                 * checkMate = check.checkMate(tiles, kingTile, turnWhite, ps);
-                 * pawnPromotion(tile);
-                 * if (turnWhite) {
-                 * whoseTurn.setText("White's Turn");
-                 * } else {
-                 * whoseTurn.setText("Black's Turn");
-                 * }
-                 * material = 0;
-                 * for (Piece p : ps) {
-                 * if (p.isWhite) {
-                 * material += p.getMaterial();
-                 * } else {
-                 * material -= p.getMaterial();
-                 * }
-                 * }
-                 * if (material > 0) {
-                 * materialW = material;
-                 * materialB = -material;
-                 * } else {
-                 * materialW = -material;
-                 * materialB = material;
-                 * }
-                 * materialWhite.setText("White\n" + materialW);
-                 * materialBlack.setText("Black\n" + materialB);
-                 * if (checkMate != 0) {
-                 * endScreen();
-                 * }
-                 * 
-                 * } else { // Selecting a new tile with a piece. Legalises the pseudo legal
-                 * moves generated
-                 * // from this piece.
-                 * ArrayList<Tile> lMoves = check.LegaliseMoves(tiles, kingTile,
-                 * pseudolegalMoves, tile.getPiece(),
-                 * tile.getX(), tile.getY(), turnWhite);
-                 * if (computer == 2 || (computer == 1 && turnWhite == false)) { // Computer
-                 * moves
-                 * compMoves = possibleMoves(lMoves);
-                 * computerTurn();
-                 * compMoves = null;
-                 * return;
-                 * }
-                 * possibleMoves(lMoves); // Highlights the legal moves on the board.
-                 * return;
-                 * }
-                 * }
-                 * if (selectedTile != tile) { // Removes the highlighted moves from the board.
-                 * clearPossibleMoves();
-                 * }
-                 * if (computer == 2 || (computer == 1 && turnWhite == false)) {
-                 * computerTurn();
-                 * }
-                 * }
-                 * });
-                 */
+                kingTile = turnWhite ? kingTileW : kingTileB; // points kingTile at correct king.
                 if (selectedTile != null) {
                     if (pseudolegalMoves == null) {
                         handleTileClick(tile);
@@ -295,6 +205,12 @@ public class ChessGame {
         th.start();
     }
 
+    /**
+     * Handles moving and taking of pieces as well as updating whose turn to move it
+     * is.
+     * 
+     * @param tile the tile that was clicked.
+     */
     private void handleTileClick(Tile tile) {
         if (tile.getHighlight()) {
             if (!tile.isOccupied()) {
@@ -315,6 +231,11 @@ public class ChessGame {
         checkEndGame();
     }
 
+    /**
+     * Moves the selected piece to the designated unoccupied tile.
+     * 
+     * @param tile the unoccupied tile that was clicked.
+     */
     private void movePieceToTile(Tile tile) {
         tile.setPiece(selectedTile.getPiece());
         enPassantFlag(selectedTile, tile);
@@ -327,6 +248,11 @@ public class ChessGame {
         kingTileUpdate(tile);
     }
 
+    /**
+     * Moves the selected piece to the designated occupied tile and takes the piece.
+     * 
+     * @param tile the occupied tile that was clicked.
+     */
     private void takePiece(Tile tile) {
         tile.getPiece().kill();
         tile.removePiece();
@@ -339,6 +265,9 @@ public class ChessGame {
         kingTileUpdate(tile);
     }
 
+    /**
+     * Updates the material counter and the graphics that display them.
+     */
     private void updateMaterial() {
         int material = 0;
         for (Piece p : ps) {
@@ -350,6 +279,9 @@ public class ChessGame {
         materialBlack.setText("Black\n" + materialB);
     }
 
+    /**
+     * Updates the graphics displaying whose turn it is to move.
+     */
     private void updateTurn() {
         if (turnWhite) {
             whoseTurn.setText("White's Turn");
@@ -414,7 +346,7 @@ public class ChessGame {
                     promotePiece(backTile, new Queen(colour, ps), rTurn);
                     return;
                 }
-                ArrayList<Piece> pieces = new ArrayList<>();
+                ArrayList<Piece> pieces = new ArrayList<>(); // Array to temporarily store options for promotion.
                 pieces.add(new Queen(colour, ps));
                 pieces.add(new Rook(colour, ps));
                 pieces.add(new Bishop(colour, ps));
@@ -541,6 +473,10 @@ public class ChessGame {
         }
     }
 
+    /**
+     * Observes the board to look for a checkmate or stalemate, and if so calls the
+     * method that handles the end screen.
+     */
     private void checkEndGame() {
         checkMate = check.checkMate(tiles, kingTile, turnWhite, ps);
         if (checkMate != 0) {
@@ -549,7 +485,7 @@ public class ChessGame {
     }
 
     /**
-     * The Screen displayed when a checkMate has been made.
+     * The Screen displayed when a checkMate or stalemate has been made.
      */
     public void endScreen() {
         if (checkMate == 1) {
