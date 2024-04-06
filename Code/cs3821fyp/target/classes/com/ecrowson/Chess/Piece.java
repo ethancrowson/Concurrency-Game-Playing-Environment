@@ -116,4 +116,140 @@ public abstract class Piece extends ImageView {
      *         (including takes).
      */
     public abstract ArrayList<Tile> getMoves(Tile[][] board, int file, int rank);
+
+    /**
+     * Loops through the board and returns the pseudo legal Orthogonal sliding moves
+     * that the piece can make.
+     * 
+     * @param board the board of tiles the game is being played on.
+     * @param file  the file (y) of the piece on the board.
+     * @param rank  the rank (x) of the piece on the board.
+     * @return the possible tiles that the piece can move to
+     *         (including takes).
+     */
+    public ArrayList<Tile> getOrthogonalSlides(Tile[][] board, int file, int rank) {
+        ArrayList<Tile> pMoves = new ArrayList<>();
+        // Up
+        for (int f = file - 1; f >= 0; f--) {
+            if (board[f][rank].isOccupied()) {
+                if (board[f][rank].getPiece().isWhite != isWhite) {
+                    pMoves.add(board[f][rank]);
+                }
+                break;
+            }
+            pMoves.add(board[f][rank]);
+        }
+        // Down
+        for (int f = file + 1; f < 8; f++) {
+            if (board[f][rank].isOccupied()) {
+                if (board[f][rank].getPiece().isWhite != isWhite) {
+                    pMoves.add(board[f][rank]);
+                }
+                break;
+            }
+            pMoves.add(board[f][rank]);
+        }
+        // Left
+        for (int r = rank - 1; r >= 0; r--) {
+            if (board[file][r].isOccupied()) {
+                if (board[file][r].getPiece().isWhite != isWhite) {
+                    pMoves.add(board[file][r]);
+                }
+                break;
+            }
+            pMoves.add(board[file][r]);
+        }
+        // Right
+        for (int r = rank + 1; r < 8; r++) {
+            if (board[file][r].isOccupied()) {
+                if (board[file][r].getPiece().isWhite != isWhite) {
+                    pMoves.add(board[file][r]);
+                }
+                break;
+            }
+            pMoves.add(board[file][r]);
+        }
+        return pMoves;
+    }
+
+    /**
+     * Loops through the board and returns the pseudo legal Diagonal sliding moves
+     * that the piece can make.
+     * 
+     * @param board the board of tiles the game is being played on.
+     * @param file  the file (y) of the piece on the board.
+     * @param rank  the rank (x) of the piece on the board.
+     * @return the possible tiles that the piece can move to
+     *         (including takes).
+     */
+    public ArrayList<Tile> getDiagonalSlides(Tile[][] board, int file, int rank) {
+        // Up-Left
+        ArrayList<Tile> pMoves = new ArrayList<>();
+        int tempfile;
+        int temprank;
+        if (file != 0 || rank != 0) {
+            temprank = rank - 1;
+            for (int f = file - 1; f >= 0; f--) {
+                if (temprank == -1 || f == -1) {
+                    break;
+                } else if (board[f][temprank].isOccupied()) {
+                    if (board[f][temprank].getPiece().isWhite != isWhite) {
+                        pMoves.add(board[f][temprank]);
+                    }
+                    break;
+                }
+                pMoves.add(board[f][temprank]);
+                temprank--;
+            }
+        }
+        // Up-Right
+        if (file != 0 || rank != 7) {
+            tempfile = file - 1;
+            for (int r = rank + 1; r < 8; r++) {
+                if (tempfile == -1 || r == 8) {
+                    break;
+                } else if (board[tempfile][r].isOccupied()) {
+                    if (board[tempfile][r].getPiece().isWhite != isWhite) {
+                        pMoves.add(board[tempfile][r]);
+                    }
+                    break;
+                }
+                pMoves.add(board[tempfile][r]);
+                tempfile--;
+            }
+        }
+        // Down-Left
+        if (file != 7 || rank != 0) {
+            tempfile = file + 1;
+            for (int r = rank - 1; r >= 0; r--) {
+                if (tempfile == 8 || r == -1) {
+                    break;
+                } else if (board[tempfile][r].isOccupied()) {
+                    if (board[tempfile][r].getPiece().isWhite != isWhite) {
+                        pMoves.add(board[tempfile][r]);
+                    }
+                    break;
+                }
+                pMoves.add(board[tempfile][r]);
+                tempfile++;
+            }
+        }
+        // Down-Right
+        if (file != 7 || rank != 7) {
+            temprank = rank + 1;
+            for (int f = file + 1; f < 8; f++) {
+                if (temprank == 8 || f == 8) {
+                    break;
+                } else if (board[f][temprank].isOccupied()) {
+                    if (board[f][temprank].getPiece().isWhite != isWhite) {
+                        pMoves.add(board[f][temprank]);
+                    }
+                    break;
+                }
+                pMoves.add(board[f][temprank]);
+                temprank++;
+            }
+        }
+        return pMoves;
+    }
 }
