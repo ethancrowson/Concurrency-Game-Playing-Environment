@@ -26,7 +26,8 @@ public class ChessGame {
                  // use.
     Pane board; // The Pane the board is built upon.
     private Label whoseTurn = new Label("White's Turn");
-    private int material = 0; // Stores the total material. Positive is in whites favor.
+    // private int material = 0; // Stores the total material. Positive is in whites
+    // favor.
     private int materialW = 0; // Stores white's material.
     private int materialB = 0; // Stores black's material.
     private Label materialWhite = new Label("White\n" + materialW);
@@ -144,6 +145,7 @@ public class ChessGame {
      *                              the task.
      */
     public void boardManager(Tile tile) throws InterruptedException {
+        checkEndGame();
         if (checkMate != 0) {
             return;
         }
@@ -152,9 +154,6 @@ public class ChessGame {
 
             @Override
             protected ArrayList<Tile> call() throws Exception {
-                if (checkMate != 0) {
-                    return null;
-                }
                 if (tile.isOccupied()) {
                     if (selectedTile == null) {
                         if (turnWhite == tile.getPiece().isWhite) {
@@ -174,100 +173,189 @@ public class ChessGame {
             @Override
             public void handle(WorkerStateEvent event) {
                 if (checkMate != 0) {
-                    return;
-                } // If checkMate then no more game playing.
-                pseudolegalMoves = task.getValue();
-                if (turnWhite) {
-                    kingTile = kingTileW;
-                } // Sets kingTile to point to correct coloured king.
-                else {
-                    kingTile = kingTileB;
+                    return; // If checkmate then no more game playing.
                 }
+                pseudolegalMoves = task.getValue();
+                kingTile = turnWhite ? kingTileW : kingTileB;
+                /*
+                 * if (selectedTile != null) {
+                 * if (pseudolegalMoves == null) {
+                 * if (tile.getHighlight() == true) // If the tile is a possbile move.
+                 * if (!tile.isOccupied()) { // If the tile is free, move the selected piece to
+                 * the tile.
+                 * tile.setPiece(selectedTile.getPiece());
+                 * enPassantFlag(selectedTile, tile);
+                 * enPassantTake(selectedTile, tile);
+                 * castling(selectedTile, tile);
+                 * selectedTile.getPiece().setHasMoved();
+                 * selectedTile.removePiece();
+                 * turnWhite = !turnWhite;
+                 * pawnPromotion(tile);
+                 * kingTileUpdate(tile);
+                 * } else if (turnWhite != tile.getPiece().isWhite) { // If tile contains an
+                 * opponent piece
+                 * // then take.
+                 * tile.getPiece().kill();
+                 * tile.removePiece();
+                 * tile.setPiece(selectedTile.getPiece());
+                 * enPassantFlag(selectedTile, tile);
+                 * selectedTile.removePiece();
+                 * turnWhite = !turnWhite;
+                 * tile.getPiece().setHasMoved();
+                 * kingTileUpdate(tile);
+                 * }
+                 * 
+                 * selectedTile.deselect(); // Deselect selectedTile.
+                 * selectedTile = null;
+                 * if (kingTile == kingTileW) {
+                 * kingTile = kingTileB;
+                 * } // Setting kingTile to point to correct king.
+                 * else if (kingTile != kingTileW) {
+                 * kingTile = kingTileW;
+                 * }
+                 * checkMate = check.checkMate(tiles, kingTile, turnWhite, ps);
+                 * pawnPromotion(tile);
+                 * if (turnWhite) {
+                 * whoseTurn.setText("White's Turn");
+                 * } else {
+                 * whoseTurn.setText("Black's Turn");
+                 * }
+                 * material = 0;
+                 * for (Piece p : ps) {
+                 * if (p.isWhite) {
+                 * material += p.getMaterial();
+                 * } else {
+                 * material -= p.getMaterial();
+                 * }
+                 * }
+                 * if (material > 0) {
+                 * materialW = material;
+                 * materialB = -material;
+                 * } else {
+                 * materialW = -material;
+                 * materialB = material;
+                 * }
+                 * materialWhite.setText("White\n" + materialW);
+                 * materialBlack.setText("Black\n" + materialB);
+                 * if (checkMate != 0) {
+                 * endScreen();
+                 * }
+                 * 
+                 * } else { // Selecting a new tile with a piece. Legalises the pseudo legal
+                 * moves generated
+                 * // from this piece.
+                 * ArrayList<Tile> lMoves = check.LegaliseMoves(tiles, kingTile,
+                 * pseudolegalMoves, tile.getPiece(),
+                 * tile.getX(), tile.getY(), turnWhite);
+                 * if (computer == 2 || (computer == 1 && turnWhite == false)) { // Computer
+                 * moves
+                 * compMoves = possibleMoves(lMoves);
+                 * computerTurn();
+                 * compMoves = null;
+                 * return;
+                 * }
+                 * possibleMoves(lMoves); // Highlights the legal moves on the board.
+                 * return;
+                 * }
+                 * }
+                 * if (selectedTile != tile) { // Removes the highlighted moves from the board.
+                 * clearPossibleMoves();
+                 * }
+                 * if (computer == 2 || (computer == 1 && turnWhite == false)) {
+                 * computerTurn();
+                 * }
+                 * }
+                 * });
+                 */
                 if (selectedTile != null) {
                     if (pseudolegalMoves == null) {
-                        if (tile.getHighlight() == true) // If the tile is a possbile move.
-                            if (!tile.isOccupied()) { // If the tile is free, move the selected piece to the tile.
-                                tile.setPiece(selectedTile.getPiece());
-                                enPassantFlag(selectedTile, tile);
-                                enPassantTake(selectedTile, tile);
-                                castling(selectedTile, tile);
-                                selectedTile.getPiece().setHasMoved();
-                                selectedTile.removePiece();
-                                turnWhite = !turnWhite;
-                                pawnPromotion(tile);
-                                kingTileUpdate(tile);
-                            } else if (turnWhite != tile.getPiece().isWhite) { // If tile contains an opponent piece
-                                                                               // then take.
-                                tile.getPiece().kill();
-                                tile.removePiece();
-                                tile.setPiece(selectedTile.getPiece());
-                                enPassantFlag(selectedTile, tile);
-                                selectedTile.removePiece();
-                                turnWhite = !turnWhite;
-                                tile.getPiece().setHasMoved();
-                                kingTileUpdate(tile);
-                            }
-
-                        selectedTile.deselect(); // Deselect selectedTile.
-                        selectedTile = null;
-                        if (kingTile == kingTileW) {
-                            kingTile = kingTileB;
-                        } // Setting kingTile to point to correct king.
-                        else if (kingTile != kingTileW) {
-                            kingTile = kingTileW;
-                        }
-                        checkMate = check.checkMate(tiles, kingTile, turnWhite, ps);
-                        pawnPromotion(tile);
-                        if (turnWhite) {
-                            whoseTurn.setText("White's Turn");
-                        } else {
-                            whoseTurn.setText("Black's Turn");
-                        }
-                        material = 0;
-                        for (Piece p : ps) {
-                            if (p.isWhite) {
-                                material += p.getMaterial();
-                            } else {
-                                material -= p.getMaterial();
-                            }
-                        }
-                        if (material > 0) {
-                            materialW = material;
-                            materialB = -material;
-                        } else {
-                            materialW = -material;
-                            materialB = material;
-                        }
-                        materialWhite.setText("White\n" + materialW);
-                        materialBlack.setText("Black\n" + materialB);
-                        if (checkMate != 0) {
-                            endScreen();
-                        }
-
-                    } else { // Selecting a new tile with a piece. Legalises the pseudo legal moves generated
-                             // from this piece.
+                        handleTileClick(tile);
+                    } else {
                         ArrayList<Tile> lMoves = check.LegaliseMoves(tiles, kingTile, pseudolegalMoves, tile.getPiece(),
                                 tile.getX(), tile.getY(), turnWhite);
-                        if (computer == 2 || (computer == 1 && turnWhite == false)) { // Computer moves
+                        if (computer == 2 || (computer == 1 && !turnWhite)) { // Computer moves
                             compMoves = possibleMoves(lMoves);
                             computerTurn();
                             compMoves = null;
                             return;
                         }
                         possibleMoves(lMoves); // Highlights the legal moves on the board.
-                        return;
                     }
                 }
                 if (selectedTile != tile) { // Removes the highlighted moves from the board.
                     clearPossibleMoves();
                 }
-                if (computer == 2 || (computer == 1 && turnWhite == false)) {
+
+                if (computer == 2 || (computer == 1 && !turnWhite)) {
                     computerTurn();
                 }
             }
         });
         Thread th = new Thread(task); // Thread to run the task in the background
         th.start();
+    }
+
+    private void handleTileClick(Tile tile) {
+        if (tile.getHighlight()) {
+            if (!tile.isOccupied()) {
+                movePieceToTile(tile);
+            } else if (turnWhite != tile.getPiece().isWhite && tile.getPiece().getType() != 'K') {
+                takePiece(tile);
+            }
+        }
+        selectedTile.deselect(); // Deselect selectedTile.
+        selectedTile = null;
+        if (kingTile == kingTileW) {
+            kingTile = kingTileB;
+        } else {
+            kingTile = kingTileW;
+        }
+        updateTurn();
+        updateMaterial();
+        checkEndGame();
+    }
+
+    private void movePieceToTile(Tile tile) {
+        tile.setPiece(selectedTile.getPiece());
+        enPassantFlag(selectedTile, tile);
+        enPassantTake(selectedTile, tile);
+        castling(selectedTile, tile);
+        selectedTile.getPiece().setHasMoved();
+        selectedTile.removePiece();
+        turnWhite = !turnWhite;
+        pawnPromotion(tile);
+        kingTileUpdate(tile);
+    }
+
+    private void takePiece(Tile tile) {
+        tile.getPiece().kill();
+        tile.removePiece();
+        tile.setPiece(selectedTile.getPiece());
+        enPassantFlag(selectedTile, tile);
+        selectedTile.removePiece();
+        turnWhite = !turnWhite;
+        tile.getPiece().setHasMoved();
+        pawnPromotion(tile);
+        kingTileUpdate(tile);
+    }
+
+    private void updateMaterial() {
+        int material = 0;
+        for (Piece p : ps) {
+            material += p.isWhite ? p.getMaterial() : -p.getMaterial();
+        }
+        materialW = material > 0 ? material : -material;
+        materialB = material > 0 ? -material : material;
+        materialWhite.setText("White\n" + materialW);
+        materialBlack.setText("Black\n" + materialB);
+    }
+
+    private void updateTurn() {
+        if (turnWhite) {
+            whoseTurn.setText("White's Turn");
+        } else {
+            whoseTurn.setText("Black's Turn");
+        }
     }
 
     /**
@@ -299,16 +387,6 @@ public class ChessGame {
         }
     }
 
-    private void updateMaterial(char colour, int materialChange) {
-        if (colour == 'W') {
-            materialWhite.setText("White\n" + (materialW + materialChange));
-            materialBlack.setText("Black\n" + (materialB - materialChange));
-        } else {
-            materialWhite.setText("White\n" + (materialW - materialChange));
-            materialBlack.setText("Black\n" + (materialB + materialChange));
-        }
-    }
-
     /**
      * Checks if a pawn has made it to the back ranks. Creates the piece promotion
      * selection screen and promotes the piece accordingly.
@@ -322,6 +400,7 @@ public class ChessGame {
             if ((backTile.getPiece().isWhite && backTile.getY() == 0)
                     || (!backTile.getPiece().isWhite && backTile.getY() == 7)) {
                 VBox promotion = new VBox();
+                board.getChildren().add(promotion);
                 promotion.setTranslateX(backTile.getX() * 60);
                 if (backTile.getPiece().getColour() == 'W') {
                     colour = 'W';
@@ -341,16 +420,18 @@ public class ChessGame {
                 pieces.add(new Bishop(colour, ps));
                 pieces.add(new Knight(colour, ps));
                 ps.removeAll(pieces);
+                int pieceCounter = 0;
                 for (Piece piece : pieces) {
-                    Tile option = new Tile(true, backTile.getX(), 0);
+                    Tile option = new Tile(true, backTile.getX(), pieceCounter);
                     option.setPiece(piece);
                     option.setOnMouseClicked(e -> { // On click of selection, change Pawn to selected piece.
                         promotePiece(backTile, option.getPiece(), rTurn);
                         board.getChildren().remove(promotion);
                     });
                     promotion.getChildren().add(option);
+                    pieceCounter++;
                 }
-                board.getChildren().add(promotion);
+
             }
         }
     }
@@ -367,15 +448,11 @@ public class ChessGame {
         backTile.getPiece().kill();
         backTile.removePiece();
         backTile.setPiece(selectedPiece);
-        ps.add(selectedPiece);
-        char colour = selectedPiece.getColour();
-        int materialChange = colour == 'W' ? selectedPiece.getMaterial() : -selectedPiece.getMaterial();
-        updateMaterial(colour, materialChange);
-        checkMate = check.checkMate(tiles, kingTile, rTurn, ps); // Check if this new piece puts the king in
-                                                                 // check/checkmate.
-        if (checkMate != 0) {
-            endScreen();
+        if (computer == 0) {
+            ps.add(selectedPiece);
         }
+        updateMaterial();
+        checkEndGame();
     }
 
     /**
@@ -416,11 +493,12 @@ public class ChessGame {
     public void enPassantTake(Tile selectedTile, Tile targetTile) {
         if (selectedTile.getPiece().getType() == 'P') {
             if (targetTile.getX() != selectedTile.getX()) {
-                if (selectedTile.getPiece().isWhite) {
+                if (selectedTile.getPiece().isWhite && tiles[targetTile.getX()][targetTile.getY() + 1].isOccupied()) {
                     // If white, remove piece one below the tile being moved to.
                     tiles[targetTile.getX()][targetTile.getY() + 1].getPiece().kill();
                     tiles[targetTile.getX()][targetTile.getY() + 1].removePiece();
-                } else {
+                } else if (!selectedTile.getPiece().isWhite
+                        && tiles[targetTile.getX()][targetTile.getY() - 1].isOccupied()) {
                     // If black, remove piece one above the tile being moved to.
                     tiles[targetTile.getX()][targetTile.getX() - 1].getPiece().kill();
                     tiles[targetTile.getX()][targetTile.getX() - 1].removePiece();
@@ -456,10 +534,17 @@ public class ChessGame {
      * @param tile the tile that a piece has jsut been moved to.
      */
     public void kingTileUpdate(Tile tile) {
-        if (tile.getPiece().getType() == 'K' && tile.getPiece().isWhite) {
+        if (tile.isOccupied() && tile.getPiece().getType() == 'K' && tile.getPiece().isWhite) {
             kingTileW = tile;
-        } else if (tile.getPiece().getType() == 'K' && !tile.getPiece().isWhite) {
+        } else if (tile.isOccupied() && tile.getPiece().getType() == 'K' && !tile.getPiece().isWhite) {
             kingTileB = tile;
+        }
+    }
+
+    private void checkEndGame() {
+        checkMate = check.checkMate(tiles, kingTile, turnWhite, ps);
+        if (checkMate != 0) {
+            endScreen();
         }
     }
 
@@ -525,8 +610,8 @@ public class ChessGame {
                 }
             }
         }
+        // Calls the board manager to run this tile selection through the game.
         try {
-            // Calls the board manager to run this tile selection through the game.
             boardManager(rTile);
         } catch (InterruptedException e) {
             e.printStackTrace();

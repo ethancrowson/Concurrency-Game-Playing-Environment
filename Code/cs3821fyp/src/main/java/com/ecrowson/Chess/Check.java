@@ -43,8 +43,9 @@ public class Check {
                 kingTile = pMove;
             }
             board[file][rank].removePiece(); // Move the test piece to pseudo legal move.
-            testOpponentMoves: for (int f = 0; f < 8; f++) { // Loop through board to find opponents possible moves if
-                                                             // above move is made.
+            testOpponentMoves:
+            // Loop through board to find opponents possible moves if above move is made.
+            for (int f = 0; f < 8; f++) {
                 for (int r = 0; r < 8; r++) {
                     if (board[f][r].isOccupied()) {
                         Piece p = board[f][r].getPiece();
@@ -53,6 +54,7 @@ public class Check {
                             for (Tile t : opponentMoves) {
                                 if (t == kingTile) { // If opponent can make a move that takes the king.
                                     iterator.remove(); // Safely remove pMove from the pseudo legal moves.
+                                    opponentMoves.clear();
                                     break testOpponentMoves;
                                 }
                             }
@@ -107,14 +109,14 @@ public class Check {
 
             }
         }
+        if (ps.size() <= 2) {
+            return 1;
+        }
         if (possibleMoves.size() == 0) {
             if (checkingMoves.size() == 0) {
                 return 1; // Stalemate
             }
             return 2; // Checkmate
-        }
-        if (ps.size() == 2) {
-            return 1;
         }
         return 0; // No stalemate or checkmate.
     }

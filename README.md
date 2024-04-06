@@ -14,3 +14,5 @@ Use Guide:
 - With Chess you can selected how many computers play with the provided drop down choice box.
 - Clicking the 'New Instance' buttons will load up new instances of each game.
 - You can load as many of each as you want and have multiple chess games running with varied amounts of computers.
+- If creating a chess game with 2 bots, click any tile on the board to start the game.
+- Be aware the bots run the game quite fast, this is left as fast in order to simulate games quickly and allow for many instances to run without slowing them down.
