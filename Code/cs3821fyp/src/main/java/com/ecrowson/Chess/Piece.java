@@ -12,10 +12,10 @@ import javafx.scene.image.ImageView;
  * @author Ethan Crowson
  */
 public abstract class Piece extends ImageView {
-    char colour; // Character representation of the colour of the piece.
+    private char colour; // Character representation of the colour of the piece.
     boolean isWhite; // Boolean of if the piece is white or black.
-    LinkedList<Piece> ps; // The list of pieces in play.
-    boolean hasMoved; // Flag for if the piece has moved on the board. Castling and double pawn push.
+    private LinkedList<Piece> ps; // The list of pieces in play.
+    private boolean hasMoved; // Flag for if the piece has moved on the board. Castling and double pawn push.
     private boolean enPassant = false; // Flag for if the pawn is "enPassantable".
 
     /**
@@ -89,6 +89,15 @@ public abstract class Piece extends ImageView {
      */
     public void setEnPassant(boolean result) {
         this.enPassant = result;
+    }
+
+    /**
+     * Getter method for the colour of the piece.
+     * 
+     * @return the colour of the piece in char format.
+     */
+    public char getColour() {
+        return this.colour;
     }
 
     /**

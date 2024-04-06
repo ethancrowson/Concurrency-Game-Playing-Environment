@@ -75,7 +75,7 @@ public class Tile extends StackPane {
     public void setPiece(Piece piece) {
         if (piece != null) {
             this.piece = piece;
-            Image i = new Image("Pieces/" + piece.colour + "" + piece.getType() + ".png");
+            Image i = new Image("Pieces/" + piece.getColour() + "" + piece.getType() + ".png");
             p = new ImageView(i);
             this.getChildren().add(p);
         }

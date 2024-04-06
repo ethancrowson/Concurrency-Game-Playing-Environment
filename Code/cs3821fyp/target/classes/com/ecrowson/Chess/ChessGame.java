@@ -299,6 +299,16 @@ public class ChessGame {
         }
     }
 
+    private void updateMaterial(char colour, int materialChange) {
+        if (colour == 'W') {
+            materialWhite.setText("White\n" + (materialW + materialChange));
+            materialBlack.setText("Black\n" + (materialB - materialChange));
+        } else {
+            materialWhite.setText("White\n" + (materialW - materialChange));
+            materialBlack.setText("Black\n" + (materialB + materialChange));
+        }
+    }
+
     /**
      * Checks if a pawn has made it to the back ranks. Creates the piece promotion
      * selection screen and promotes the piece accordingly.
@@ -306,15 +316,14 @@ public class ChessGame {
      * @param backTile the tile on the back rank the pawn is currently occupying.
      */
     public void pawnPromotion(Tile backTile) {
-
         if (backTile.isOccupied() && backTile.getPiece().getType() == 'P') {
+            char colour;
+            boolean rTurn;
             if ((backTile.getPiece().isWhite && backTile.getY() == 0)
                     || (!backTile.getPiece().isWhite && backTile.getY() == 7)) {
-                char colour;
-                boolean rTurn;
                 VBox promotion = new VBox();
                 promotion.setTranslateX(backTile.getX() * 60);
-                if (backTile.getPiece().colour == 'W') {
+                if (backTile.getPiece().getColour() == 'W') {
                     colour = 'W';
                     rTurn = false;
                 } else {
@@ -322,60 +331,50 @@ public class ChessGame {
                     rTurn = true;
                     promotion.setTranslateY(180); // Sets the promotion screen to appear at bottom of board.
                 }
-                if (computer == 2 || (computer == 1 && turnWhite == false)) {
-                    backTile.getPiece().kill();
-                    backTile.removePiece();
-                    backTile.setPiece(new Queen(colour, ps));
-                    checkMate = check.checkMate(tiles, kingTile, rTurn, ps);
-                    if (checkMate != 0) {
-                        endScreen();
-                    }
+                if (computer == 2 || (computer == 1 && !turnWhite)) {
+                    promotePiece(backTile, new Queen(colour, ps), rTurn);
                     return;
                 }
-                ArrayList<Piece> pieces = new ArrayList<Piece>();
-                Piece Q = new Queen(colour, ps);
-                Piece R = new Rook(colour, ps);
-                Piece B = new Bishop(colour, ps);
-                Piece N = new Knight(colour, ps);
-                pieces.add(Q);
-                pieces.add(R);
-                pieces.add(B);
-                pieces.add(N);
+                ArrayList<Piece> pieces = new ArrayList<>();
+                pieces.add(new Queen(colour, ps));
+                pieces.add(new Rook(colour, ps));
+                pieces.add(new Bishop(colour, ps));
+                pieces.add(new Knight(colour, ps));
                 ps.removeAll(pieces);
-                for (int i = 0; i < 4; i++) {
-                    Tile option = new Tile(true, backTile.getX(), 0 + i);
-                    if (i == 0) {
-                        option.setPiece(Q);
-                    } else if (i == 1) {
-                        option.setPiece(R);
-                    } else if (i == 2) {
-                        option.setPiece(B);
-                    } else {
-                        option.setPiece(N);
-                    }
+                for (Piece piece : pieces) {
+                    Tile option = new Tile(true, backTile.getX(), 0);
+                    option.setPiece(piece);
                     option.setOnMouseClicked(e -> { // On click of selection, change Pawn to selected piece.
-                        backTile.getPiece().kill();
-                        backTile.removePiece();
-                        backTile.setPiece(option.getPiece());
-                        ps.add(option.getPiece());
-                        if (colour == 'W') { // Update material after choice of piece.
-                            materialWhite.setText("White\n" + (materialW + option.getPiece().getMaterial()));
-                            materialBlack.setText("Black\n" + (materialB - option.getPiece().getMaterial()));
-                        } else {
-                            materialWhite.setText("White\n" + (materialW - option.getPiece().getMaterial()));
-                            materialBlack.setText("Black\n" + (materialB + option.getPiece().getMaterial()));
-                        }
+                        promotePiece(backTile, option.getPiece(), rTurn);
                         board.getChildren().remove(promotion);
-                        checkMate = check.checkMate(tiles, kingTile, rTurn, ps); // Check if this new piece puts the
-                                                                                 // king in check/checkmate.
-                        if (checkMate != 0) {
-                            endScreen();
-                        }
                     });
                     promotion.getChildren().add(option);
                 }
                 board.getChildren().add(promotion);
             }
+        }
+    }
+
+    /**
+     * Handles the actual changing of the piece from the pawn once chosen.
+     * 
+     * @param backTile      the tile on the back rank the pawn is currently
+     *                      occupying.
+     * @param selectedPiece the piece chosen to promote to.
+     * @param rTurn         what colour is promoting the piece.
+     */
+    private void promotePiece(Tile backTile, Piece selectedPiece, boolean rTurn) {
+        backTile.getPiece().kill();
+        backTile.removePiece();
+        backTile.setPiece(selectedPiece);
+        ps.add(selectedPiece);
+        char colour = selectedPiece.getColour();
+        int materialChange = colour == 'W' ? selectedPiece.getMaterial() : -selectedPiece.getMaterial();
+        updateMaterial(colour, materialChange);
+        checkMate = check.checkMate(tiles, kingTile, rTurn, ps); // Check if this new piece puts the king in
+                                                                 // check/checkmate.
+        if (checkMate != 0) {
+            endScreen();
         }
     }
 
@@ -438,7 +437,7 @@ public class ChessGame {
      * @param targetTile   the target tile in which you want to move a piece to.
      */
     public void castling(Tile selectedTile, Tile targetTile) {
-        if (selectedTile.getPiece().getType() == 'K' && selectedTile.getPiece().hasMoved == false) {
+        if (selectedTile.getPiece().getType() == 'K' && selectedTile.getPiece().getHasMoved() == false) {
             if (targetTile.getX() == 2 && targetTile.getHighlight() == true) {
                 tiles[3][selectedTile.getY()].setPiece(tiles[0][selectedTile.getY()].getPiece());
                 tiles[0][selectedTile.getY()].removePiece();

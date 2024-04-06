@@ -51,7 +51,7 @@ public class Pawn extends Piece {
         if (isWhite && rank != 0) {
             if (!board[file][rank - 1].isOccupied()) {
                 pMoves.add(board[file][rank - 1]);
-                if (!hasMoved) {
+                if (!getHasMoved()) {
                     if (!board[file][rank - 2].isOccupied()) {
                         pMoves.add(board[file][rank - 2]);
                     }
@@ -79,7 +79,7 @@ public class Pawn extends Piece {
         } else if (!isWhite && rank != 7) {
             if (!board[file][rank + 1].isOccupied()) {
                 pMoves.add(board[file][rank + 1]);
-                if (!hasMoved) {
+                if (!getHasMoved()) {
                     if (!board[file][rank + 2].isOccupied()) {
                         pMoves.add(board[file][rank + 2]);
                     }

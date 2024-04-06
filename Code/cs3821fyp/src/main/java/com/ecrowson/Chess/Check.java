@@ -109,10 +109,9 @@ public class Check {
         }
         if (possibleMoves.size() == 0) {
             if (checkingMoves.size() == 0) {
-                return 1; // If no legal moves and king is not in check then it must be a stalemate.
+                return 1; // Stalemate
             }
-            return 2; // If a colour can make no legal moves and king is in check then it must be
-                      // checkmate.
+            return 2; // Checkmate
         }
         if (ps.size() == 2) {
             return 1;
