@@ -391,7 +391,7 @@ public class ChessGame {
      * Checks if en-Passant is possible. Also removes the flag if the 1 turn move
      * has passed.
      * 
-     * @param endTile   the target tile in which you want to move a piece to.
+     * @param endTile the target tile in which you want to move a piece to.
      */
     private void enPassantFlag(Tile endTile) {
         for (int file = 0; file < 8; file++) {
@@ -418,7 +418,7 @@ public class ChessGame {
      * Handles the actual taking of the piece in the en-Passant move as the take is
      * not on the tile the piece is occupying.
      * 
-     * @param targetTile   the target tile in which you want to move a piece to.
+     * @param targetTile the target tile in which you want to move a piece to.
      */
     private void enPassantTake(Tile targetTile) {
         if (selectedTile.getPiece().getType() == 'P') {
@@ -441,7 +441,7 @@ public class ChessGame {
     /**
      * Handles the moving of the pieces in the instance of a castle move.
      * 
-     * @param targetTile   the target tile in which you want to move a piece to.
+     * @param targetTile the target tile in which you want to move a piece to.
      */
     private void castling(Tile targetTile) {
         if (selectedTile.getPiece().getType() == 'K' && selectedTile.getPiece().getHasMoved() == false) {

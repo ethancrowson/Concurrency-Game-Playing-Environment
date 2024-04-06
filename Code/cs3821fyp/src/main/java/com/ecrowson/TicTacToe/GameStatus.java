@@ -17,9 +17,9 @@ public class GameStatus {
     /**
      * Checks the status of the game ( Won / Tied / In Play )
      * 
-     * @param lines  A list of the possible winning line combinations.
-     * @param spaces The 2D array representation of the spaces on the board.
-     * @return WinLine Either the winning line (result = win), the first row of the
+     * @param lines  a list of the possible winning line combinations.
+     * @param spaces the 2D array representation of the spaces on the board.
+     * @return either the winning line (result = win), the first row of the
      *         board (result =
      *         draw) or null (no win or draw).
      */

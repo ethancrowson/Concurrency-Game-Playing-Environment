@@ -46,8 +46,8 @@ public class Game {
     /**
      * Creates a new Game.
      * 
-     * @param board      The pane the game GUI will be created and played on.
-     * @param gamestatus The shared object between game instances that checks the
+     * @param board      the pane the game GUI will be created and played on.
+     * @param gamestatus the shared object between game instances that checks the
      *                   status of a game.
      */
     public Game(Pane board, GameStatus gamestatus) {
@@ -103,8 +103,8 @@ public class Game {
      * turn by turn
      * workings of the game).
      * 
-     * @param space The space the user has clicked on with the mouse.
-     * @throws InterruptedException Thrown when the thread is interrupted, either
+     * @param space the space the user has clicked on with the mouse.
+     * @throws InterruptedException thrown when the thread is interrupted, either
      *                              before or during
      *                              the task.
      */
@@ -168,7 +168,7 @@ public class Game {
     /**
      * Handles the screen that is displayed when a player wins a game.
      * 
-     * @param line The line that won the game.
+     * @param line the line that won the game.
      */
     private void winScreen(WinLine line) {
         double lineStartX = line.getSpace(0).getCenterX();

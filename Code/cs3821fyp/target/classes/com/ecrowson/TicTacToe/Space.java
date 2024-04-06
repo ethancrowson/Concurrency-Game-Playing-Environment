@@ -28,7 +28,7 @@ public class Space extends StackPane {
      * Sets the text value of the square to either X or O depending on whose turn it
      * is.
      * 
-     * @param xturn Whose turn it is to mark a space. (X/O)
+     * @param xturn whose turn it is to mark a space. (X/O)
      */
     public void setValue(Boolean xturn) {
         if (!isOccupied()) { // ensure it cannot be overwritten.

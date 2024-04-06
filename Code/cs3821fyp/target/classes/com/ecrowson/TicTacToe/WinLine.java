@@ -11,7 +11,7 @@ public class WinLine {
     /**
      * Constructs a new WinLine instance.
      * 
-     * @param spaces The spaces that combine to make a line.
+     * @param spaces the spaces that combine to make a line.
      */
     public WinLine(Space... spaces) {
         this.spaces = spaces;
@@ -22,7 +22,7 @@ public class WinLine {
      * has been
      * completed.
      * 
-     * @return Boolean If a given line has all spaces with the same value.
+     * @return if a given line has all spaces with the same value.
      */
     public Boolean isComplete() {
         // Checks if a combination is complete (3 spaces in a line have the same value).
