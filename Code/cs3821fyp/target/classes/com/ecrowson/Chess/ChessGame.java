@@ -144,7 +144,7 @@ public class ChessGame {
      *                              before or during
      *                              the task.
      */
-    public void boardManager(Tile tile) throws InterruptedException {
+    private void boardManager(Tile tile) throws InterruptedException {
         checkEndGame();
         if (checkMate != 0) {
             return;
@@ -238,9 +238,9 @@ public class ChessGame {
      */
     private void movePieceToTile(Tile tile) {
         tile.setPiece(selectedTile.getPiece());
-        enPassantFlag(selectedTile, tile);
-        enPassantTake(selectedTile, tile);
-        castling(selectedTile, tile);
+        enPassantFlag(tile);
+        enPassantTake(tile);
+        castling(tile);
         selectedTile.getPiece().setHasMoved();
         selectedTile.removePiece();
         turnWhite = !turnWhite;
@@ -257,7 +257,7 @@ public class ChessGame {
         tile.getPiece().kill();
         tile.removePiece();
         tile.setPiece(selectedTile.getPiece());
-        enPassantFlag(selectedTile, tile);
+        enPassantFlag(tile);
         selectedTile.removePiece();
         turnWhite = !turnWhite;
         tile.getPiece().setHasMoved();
@@ -296,7 +296,7 @@ public class ChessGame {
      * @param pMoves the tiles which have legal moves to be highlighted.
      * @return the legal moves that have now been highlighted.
      */
-    public ArrayList<Tile> possibleMoves(ArrayList<Tile> pMoves) {
+    private ArrayList<Tile> possibleMoves(ArrayList<Tile> pMoves) {
         for (Tile i : pMoves) {
             if (i.isOccupied()) {
                 i.setHighlight("Take");
@@ -311,7 +311,7 @@ public class ChessGame {
     /**
      * Removes all the highlights from all tiles on the board.
      */
-    public void clearPossibleMoves() {
+    private void clearPossibleMoves() {
         for (int file = 0; file < 8; file++) {
             for (int rank = 0; rank < 8; rank++) {
                 tiles[file][rank].removeHighlight();
@@ -325,7 +325,7 @@ public class ChessGame {
      * 
      * @param backTile the tile on the back rank the pawn is currently occupying.
      */
-    public void pawnPromotion(Tile backTile) {
+    private void pawnPromotion(Tile backTile) {
         if (backTile.isOccupied() && backTile.getPiece().getType() == 'P') {
             char colour;
             boolean rTurn;
@@ -391,10 +391,9 @@ public class ChessGame {
      * Checks if en-Passant is possible. Also removes the flag if the 1 turn move
      * has passed.
      * 
-     * @param startTile the selected tile in which you want to move a piece from.
      * @param endTile   the target tile in which you want to move a piece to.
      */
-    public void enPassantFlag(Tile startTile, Tile endTile) {
+    private void enPassantFlag(Tile endTile) {
         for (int file = 0; file < 8; file++) {
             for (int rank = 0; rank < 8; rank++) {
                 Tile currTile = tiles[file][rank];
@@ -406,10 +405,10 @@ public class ChessGame {
                 }
             }
         }
-        if (startTile.getPiece().getType() == 'P') { // If double push pawn then then that pawn's flag to true.
-            if (startTile.getPiece().getHasMoved() == false) {
+        if (selectedTile.getPiece().getType() == 'P') { // If double push pawn then then that pawn's flag to true.
+            if (selectedTile.getPiece().getHasMoved() == false) {
                 if (endTile.getY() == 3 || endTile.getY() == 4) {
-                    startTile.getPiece().setEnPassant(true);
+                    selectedTile.getPiece().setEnPassant(true);
                 }
             }
         }
@@ -419,10 +418,9 @@ public class ChessGame {
      * Handles the actual taking of the piece in the en-Passant move as the take is
      * not on the tile the piece is occupying.
      * 
-     * @param selectedTile the selected tile in which you want to move a piece from.
      * @param targetTile   the target tile in which you want to move a piece to.
      */
-    public void enPassantTake(Tile selectedTile, Tile targetTile) {
+    private void enPassantTake(Tile targetTile) {
         if (selectedTile.getPiece().getType() == 'P') {
             if (targetTile.getX() != selectedTile.getX()) {
                 if (selectedTile.getPiece().isWhite && tiles[targetTile.getX()][targetTile.getY() + 1].isOccupied()) {
@@ -443,10 +441,9 @@ public class ChessGame {
     /**
      * Handles the moving of the pieces in the instance of a castle move.
      * 
-     * @param selectedTile the selected tile in which you want to move a piece from.
      * @param targetTile   the target tile in which you want to move a piece to.
      */
-    public void castling(Tile selectedTile, Tile targetTile) {
+    private void castling(Tile targetTile) {
         if (selectedTile.getPiece().getType() == 'K' && selectedTile.getPiece().getHasMoved() == false) {
             if (targetTile.getX() == 2 && targetTile.getHighlight() == true) {
                 tiles[3][selectedTile.getY()].setPiece(tiles[0][selectedTile.getY()].getPiece());
@@ -465,7 +462,7 @@ public class ChessGame {
      * 
      * @param tile the tile that a piece has jsut been moved to.
      */
-    public void kingTileUpdate(Tile tile) {
+    private void kingTileUpdate(Tile tile) {
         if (tile.isOccupied() && tile.getPiece().getType() == 'K' && tile.getPiece().isWhite) {
             kingTileW = tile;
         } else if (tile.isOccupied() && tile.getPiece().getType() == 'K' && !tile.getPiece().isWhite) {
@@ -487,7 +484,7 @@ public class ChessGame {
     /**
      * The Screen displayed when a checkMate or stalemate has been made.
      */
-    public void endScreen() {
+    private void endScreen() {
         if (checkMate == 1) {
             whoseTurn.setText("Stalemate");
         } else if (checkMate == 2) {
@@ -503,7 +500,7 @@ public class ChessGame {
     /**
      * Handles the moves the computer plays.
      */
-    public synchronized void computerTurn() {
+    private synchronized void computerTurn() {
         Random rand = new Random();
         Tile rTile = null;
         if (selectedTile == null) {
