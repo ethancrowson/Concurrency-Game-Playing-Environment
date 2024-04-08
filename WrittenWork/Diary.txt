@@ -174,7 +174,12 @@
 - Copious testing accompanied by bug fixes.
 
 07/04/24
--
+- Creation of a main menu/home screen in which the user can create instances of each game.
+- This main menu also gives options for the amount of bots in each chess game instance 0/1/2.
+- Updates of the README.
+- Significant progress on the report, there is normally constant progress but significant since last entry.
+- Refactoring of entire program.
+- Fixing and addition of some Javadoc.
 
 11/04/24
 -
