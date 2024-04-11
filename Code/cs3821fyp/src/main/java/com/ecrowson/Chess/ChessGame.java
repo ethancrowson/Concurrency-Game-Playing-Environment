@@ -147,7 +147,7 @@ public class ChessGame {
      */
     private void boardManager(Tile tile) throws InterruptedException {
         checkEndGame();
-        if (waitPromotion == true){
+        if (waitPromotion == true) {
             return;
         }
         if (checkMate != 0) {
