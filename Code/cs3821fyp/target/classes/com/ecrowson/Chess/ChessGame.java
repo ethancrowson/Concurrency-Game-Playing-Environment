@@ -46,6 +46,7 @@ public class ChessGame {
     private int computer; // True = 2 Computers playing random moves for concurrency demonstration. False
                           // = Human v Human.
     private ArrayList<Tile> compMoves; // Possible computer moves. Used if computer = true.
+    private boolean waitPromotion = false;
 
     /**
      * Constructs the game instance that will handle chess. Calls createBoard().
@@ -146,6 +147,9 @@ public class ChessGame {
      */
     private void boardManager(Tile tile) throws InterruptedException {
         checkEndGame();
+        if (waitPromotion == true){
+            return;
+        }
         if (checkMate != 0) {
             return;
         }
@@ -359,10 +363,12 @@ public class ChessGame {
                     option.setOnMouseClicked(e -> { // On click of selection, change Pawn to selected piece.
                         promotePiece(backTile, option.getPiece(), rTurn);
                         board.getChildren().remove(promotion);
+                        waitPromotion = false;
                     });
                     promotion.getChildren().add(option);
                     pieceCounter++;
                 }
+                waitPromotion = true;
 
             }
         }
