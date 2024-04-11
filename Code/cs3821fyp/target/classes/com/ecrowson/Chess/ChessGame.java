@@ -346,7 +346,7 @@ public class ChessGame {
                     rTurn = true;
                     promotion.setTranslateY(180); // Sets the promotion screen to appear at bottom of board.
                 }
-                if (computer == 2 || (computer == 1 && !turnWhite)) {
+                if (computer == 2 || (computer == 1 && turnWhite)) {
                     promotePiece(backTile, new Queen(colour, ps), rTurn);
                     return;
                 }
