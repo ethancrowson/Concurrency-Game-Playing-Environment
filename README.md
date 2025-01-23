@@ -3,12 +3,15 @@ A Concurreny Based Game Environment
 
 Demonstration and Explanation Video: https://www.youtube.com/watch?v=osYcO-F14JI
 
-Inital setup (using terminal):
-- cd into PROJECT\Code\cs3821fyp
-- install by typing 'mvn clean install'
+## Getting Started
+To run the application:
+```
+cd PROJECT\Code\cs3821fyp
+mvn clean install
+mvn clean javafx:run
+```
 
-Use Guide:
-- Run the application by typing 'mvn clean javafx:run' into the terminal.
+## Using The Application
 - This will load up the main menu screen in which you can play multiple game instances from. 
 - This includes Chess with either 2 human player, 1 human player or 2 computers, and Tic-Tac-Toe (Noughts and Crosses) with 2 human players.
 - With Chess you can selected how many computers play with the provided drop down choice box.
